@@ -1,6 +1,9 @@
 const lightCodeTheme = require('prism-react-renderer/themes/github');
 const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 
+const algosdkPlugin = require('./src/docusaurus-plugin/algosdk/index');
+const bufferPlugin = require('./src/docusaurus-plugin/buffer/index');
+
 /** @type {import('@docusaurus/types').DocusaurusConfig} */
 module.exports = {
   title: 'My Site',
@@ -10,8 +13,8 @@ module.exports = {
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon.ico',
-  organizationName: 'facebook', // Usually your GitHub org/user name.
-  projectName: 'docusaurus', // Usually your repo name.
+  organizationName: 'Rand Labs', // Usually your GitHub org/user name.
+  projectName: 'MyAlgo Connect', // Usually your repo name.
   themeConfig: {
     navbar: {
       title: 'My Site',
@@ -22,13 +25,13 @@ module.exports = {
       items: [
         {
           type: 'doc',
-          docId: 'intro',
+          docId: 'introduction',
           position: 'left',
           label: 'Tutorial',
         },
         {to: '/blog', label: 'Blog', position: 'left'},
         {
-          href: 'https://github.com/facebook/docusaurus',
+          href: 'https://github.com/randlabs/myalgo-connect-homepage',
           label: 'GitHub',
           position: 'right',
         },
@@ -42,7 +45,7 @@ module.exports = {
           items: [
             {
               label: 'Tutorial',
-              to: '/docs/intro',
+              to: '/docs/introduction',
             },
           ],
         },
@@ -72,7 +75,7 @@ module.exports = {
             },
             {
               label: 'GitHub',
-              href: 'https://github.com/facebook/docusaurus',
+              href: 'https://github.com/randlabs/myalgo-connect-homepage',
             },
           ],
         },
@@ -92,7 +95,7 @@ module.exports = {
           sidebarPath: require.resolve('./sidebars.js'),
           // Please change this to your repo.
           editUrl:
-            'https://github.com/facebook/docusaurus/edit/master/website/',
+            'https://github.com/randlabs/myalgo-connect-homepage/edit/master/website/',
         },
         blog: {
           showReadingTime: true,
@@ -106,4 +109,10 @@ module.exports = {
       },
     ],
   ],
+  plugins: [
+    algosdkPlugin,
+    bufferPlugin,
+    'docusaurus-plugin-sass',
+    
+  ]
 };
