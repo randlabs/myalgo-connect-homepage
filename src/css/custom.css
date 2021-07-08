@@ -7,7 +7,7 @@
 
 /* You can override the default Infima variables here. */
 :root {
-  --ifm-color-primary: #25c2a0;
+  --ifm-color-primary: #245ec7;
   --ifm-color-primary-dark: rgb(33, 175, 144);
   --ifm-color-primary-darker: rgb(31, 165, 136);
   --ifm-color-primary-darkest: rgb(26, 136, 112);
@@ -15,6 +15,7 @@
   --ifm-color-primary-lighter: rgb(102, 212, 189);
   --ifm-color-primary-lightest: rgb(146, 224, 208);
   --ifm-code-font-size: 95%;
+  --ifm-color-footer: ##a7a7a7;
 }
 
 .docusaurus-highlight-code-line {
@@ -30,4 +31,52 @@ html[data-theme='dark'] .docusaurus-highlight-code-line {
 
 a{
   text-decoration: none !important;
+}
+
+.table-of-contents__link:hover{
+  color: var(--ifm-color-primary);
+}
+
+.navbar, .navbar-sidebar__brand {
+  background-color: var(--ifm-color-primary) !important;
+}
+
+.footer{
+  background-color: #ededed;
+  color: var(--ifm-color-footer);
+  padding: 0px;
+  display: flex;
+  align-items: center;
+}
+
+.footer__copyright{
+  margin: 15px;
+}
+
+.navbar__item {
+  color: white !important;
+}
+
+.navbar__item:hover {
+  opacity: 0.8;
+}
+
+.menu__link--active, .navbar__link--active, .table-of-contents__link--active, .pagination-nav__label, .markdown a{
+  color: var(--ifm-color-primary) !important;
+}
+
+.pagination-nav__link:hover {
+  border-color: var(--ifm-color-primary) !important;;
+}
+
+.navbar__brand{
+  height: 45px;
+}
+
+.navbar__toggle{
+  color: white;
+}
+
+.markdown{
+  margin-bottom: 20px;
 }

@@ -25,7 +25,7 @@ export default function ConnectExample(): JSX.Element {
             window.sharedAccounts = sharedAccounts;
         }
         catch (err) {
-            console.log(err);
+            console.error(err);
         }
     }
 

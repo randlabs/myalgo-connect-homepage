@@ -18,7 +18,7 @@ export default function Connect(): JSX.Element {
             setSignTx(signature);
         }
         catch (err) {
-            console.log(err);
+            console.error(err);
         }
     }
 
