@@ -37,7 +37,11 @@ a{
   color: var(--ifm-color-primary);
 }
 
-.navbar, .navbar-sidebar__brand, aside div a[tabindex="-1"] {
+.navbar, .navbar-sidebar__brand{
+  background-color: var(--ifm-color-primary) !important;
+}
+
+aside div a[class^="sidebarLogo_node_modules"]{
   background-color: var(--ifm-color-primary) !important;
 }
 
