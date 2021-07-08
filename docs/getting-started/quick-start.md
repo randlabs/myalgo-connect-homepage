@@ -2,7 +2,7 @@
 sidebar_position: 1
 ---
 
-# Baby Steps
+# Quick Start
 
 This section will cover a common dev flow to request the user's public wallet data, create a transaction, request the user to sign it, and finally send it to the network.
 

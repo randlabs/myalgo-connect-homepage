@@ -51,9 +51,9 @@ const signedTxn = await myAlgoConnect.signTransaction(txn.toByte());
 `;
 
 export default function PaymentTransactionExample(): JSX.Element {
-    const accountsList = window.sharedAccounts && Array.isArray(window.sharedAccounts) ? window.sharedAccounts : [];
+    const accounts = window.sharedAccounts && Array.isArray(window.sharedAccounts) ? window.sharedAccounts : [];
     const [note, setNote] = useState<Uint8Array | undefined>();
-    const [accounts, setAccounts] = useState(accountsList);
+    const [accountSelected, selectAccount] = useState("");
     const [receiver, setReceiver] = useState("");
     const [amount, setAmount] = useState(0);
     const [response, setResponse] = useState();
@@ -80,7 +80,7 @@ export default function PaymentTransactionExample(): JSX.Element {
                 suggestedParams: {
                     ...params,
                 },
-                from: accounts[0].address,
+                from: accountSelected,
                 to: receiver, note,
                 amount: algosdk.algosToMicroalgos(amount),
             });
@@ -118,11 +118,11 @@ export default function PaymentTransactionExample(): JSX.Element {
                     <Row className="mt-3">
                         <Col xs="12" lg="6" className="mt-2">
                             <Form id="payment-tx" onSubmit={onSubmitPaymentTx}>
-                                <SenderDropdown onSelectSender={setAccounts} accounts={(window as any).sharedAccounts} />
+                                <SenderDropdown onSelectSender={selectAccount} accounts={accounts} />
                                 <Address label="To" onChangeAddress={setReceiver} />
                                 <Amount amount={amount} onChangeAmount={setAmount} />
                                 <Note onChangeNote={setNote} />
-                                <Button color="primary" className="mt-2" type="submit" disabled={accounts.length === 0}>
+                                <Button color="primary" className="mt-2" type="submit" disabled={accountSelected.length === 0}>
                                     Submit
                                 </Button>
                             </Form>
@@ -148,7 +148,7 @@ export default function PaymentTransactionExample(): JSX.Element {
                             </Button>
                         </Col>
                     </Row>
-                    {accounts.length === 0 && 
+                    {accountSelected.length === 0 && 
                         <div className="error-connect mt-3"> In order to run this example, you need to execute connect() method. </div>
                     }
                 </TabPane>

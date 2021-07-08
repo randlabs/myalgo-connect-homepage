@@ -49,8 +49,8 @@ const signedTxn = await myAlgoConnect.signTransaction(txn.toByte());
 `;
 
 export default function AppCloseOutExample(): JSX.Element {
-    const accountsList = window.sharedAccounts && Array.isArray(window.sharedAccounts) ? window.sharedAccounts : [];
-    const [accounts, setAccounts] = useState(accountsList);
+    const accounts = window.sharedAccounts && Array.isArray(window.sharedAccounts) ? window.sharedAccounts : [];
+    const [accountSelected, selectAccount] = useState("");
     const [appIndex, setAppIndex] = useState("14241387");
     const [note, setNote] = useState<Uint8Array | undefined>();
     const [response, setResponse] = useState();
@@ -81,7 +81,7 @@ export default function AppCloseOutExample(): JSX.Element {
                     fee: 1000,
                     flatFee: true,
                 },
-                from: accounts[0].address,
+                from: accountSelected,
                 appIndex: parseInt(appIndex),
                 note: note
             });
@@ -120,7 +120,7 @@ export default function AppCloseOutExample(): JSX.Element {
                     <Row className="mt-3">
                         <Col xs="12" lg="6" className="mt-2">
                             <Form id="payment-tx" onSubmit={onSubmitCloseOutTx}>
-                                <SenderDropdown onSelectSender={setAccounts} accounts={accounts} />
+                                <SenderDropdown onSelectSender={selectAccount} accounts={accounts} />
                                 <AppIndex onChangeAppIndex={setAppIndex} />
                                 <Note onChangeNote={setNote} />
                                 <Button color="primary" block type="submit" className="mt-2" disabled={accounts.length === 0}>

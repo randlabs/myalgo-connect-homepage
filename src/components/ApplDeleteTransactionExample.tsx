@@ -46,9 +46,9 @@ const signedTxn = await myAlgoConnect.signTransaction(txn.toByte());
 `;
 
 export default function ApplCreateTransactionExample(): JSX.Element {
-    const accountsList = window.sharedAccounts && Array.isArray(window.sharedAccounts) ? window.sharedAccounts : [];
+    const accounts = window.sharedAccounts && Array.isArray(window.sharedAccounts) ? window.sharedAccounts : [];
     const [appIndex, setAppIndex] = useState("17140470");
-    const [accounts, setAccounts] = useState(accountsList);
+    const [accountSelected, selectAccount] = useState("");
     const [response, setResponse] = useState();
     const [activeTab, setActiveTab] = useState('1');
 
@@ -77,7 +77,7 @@ export default function ApplCreateTransactionExample(): JSX.Element {
                     fee: 1000,
                     flatFee: true,
                 },
-                from: accounts[0].address,
+                from: accountSelected,
                 appIndex: parseInt(appIndex),
             });
 
@@ -115,7 +115,7 @@ export default function ApplCreateTransactionExample(): JSX.Element {
                     <Row className="mt-3">
                         <Col xs="12" lg="6" className="mt-2">
                             <Form id="payment-tx" onSubmit={onSubmitDeleteApplTx}>
-                                <SenderDropdown onSelectSender={setAccounts} accounts={accounts} />
+                                <SenderDropdown onSelectSender={selectAccount} accounts={accounts} />
                                 <AppIndex onChangeAppIndex={setAppIndex} />
                                 <Button color="primary" block type="submit" className="mt-2" disabled={accounts.length === 0}>
                                     Submit

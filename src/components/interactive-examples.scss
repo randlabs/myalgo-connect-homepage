@@ -132,11 +132,38 @@
     font-size: 15px;
     margin-bottom: 25px;
 }
-.dropdown-toggle{
-    background-color: #245ec7 !important;
+
+.dropdown-toggle {
+      background-color: white;
+      color: #212529;
+      border: 1px solid #ced4da;
 }
 
-.btn-primary {
+
+.dropdown-toggle.disabled, .dropdown-toggle:disabled {
+    // background-color: #e5e5e5 !important;
+    // border-color: #e5e5e5 !important;
+    // color: #7b7b7b !important;
+    // opacity: 1 !important;
+}
+
+.dropdown-toggle {
+    &:hover,
+    &:focus,
+    &:active,
+    &:visited {
+        background-color: #e2e7eb !important;
+        color: #2c2e2f !important;
+        border: 1px solid #e2e7eb !important;
+        &:hover {
+            background-color: #e2e7eb !important;
+            color: #2c2e2f !important;
+            border: 1px solid #e2e7eb !important;
+        }
+    }
+}
+
+.btn-primary  {
     font-size: 0.825rem !important;
     height: 40px !important;
     background-color: #245ec7 !important;

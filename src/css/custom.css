@@ -37,8 +37,19 @@ a{
   color: var(--ifm-color-primary);
 }
 
-.navbar, .navbar-sidebar__brand {
+.navbar, .navbar-sidebar__brand, aside div a[tabindex="-1"] {
   background-color: var(--ifm-color-primary) !important;
+}
+
+aside div a[tabindex="-1"] {
+  margin-left: 0px;
+  margin-right: 0px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+aside div a[tabindex="-1"] img {
+  height: 45px;
 }
 
 .footer{

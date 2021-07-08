@@ -20,7 +20,7 @@ export default function ConnectExample(): JSX.Element {
     const onClick = async (e: MouseEvent): Promise<void> => {
         e.preventDefault();
         try {
-            const sharedAccounts = await myAlgoWallet.connect({ shouldSelectOneAccount: true });
+            const sharedAccounts = await myAlgoWallet.connect();
             setAccounts(sharedAccounts);
             window.sharedAccounts = sharedAccounts;
         }

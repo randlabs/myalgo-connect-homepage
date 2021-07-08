@@ -73,8 +73,8 @@ const signedTxns = await myAlgoConnect.signTransaction(txnsArray.map(txn => txn.
 `;
 
 export default function GroupedPaymentExample(): JSX.Element {
-    const accountsList = window.sharedAccounts && Array.isArray(window.sharedAccounts) ? window.sharedAccounts : [];
-    const [accounts, setAccounts] = useState(accountsList);
+    const accounts = window.sharedAccounts && Array.isArray(window.sharedAccounts) ? window.sharedAccounts : [];
+    const [accountSelected, selectAccount] = useState("");
     const [receiver1, setReceiver1] = useState("");
     const [receiver2, setReceiver2] = useState("");
     const [amount1, setAmount1] = useState(0);
@@ -107,7 +107,7 @@ export default function GroupedPaymentExample(): JSX.Element {
                     fee: 1000,
                     flatFee: true,
                 },
-                from: accounts[0].address,
+                from: accountSelected,
                 to: receiver1,
                 amount: algosdk.algosToMicroalgos(amount1),
             });
@@ -118,7 +118,7 @@ export default function GroupedPaymentExample(): JSX.Element {
                     fee: 1000,
                     flatFee: true,
                 },
-                from: accounts[0].address,
+                from: accountSelected,
                 to: receiver2,
                 amount: algosdk.algosToMicroalgos(amount2),
             });
@@ -163,7 +163,7 @@ export default function GroupedPaymentExample(): JSX.Element {
                     <Row className="mt-3">
                         <Col xs="12" lg="6" className="mt-2">
                             <Form id="payment-tx" onSubmit={onSubmitGroupTxns}>
-                                <SenderDropdown onSelectSender={setAccounts} accounts={(window as any).sharedAccounts} />
+                                <SenderDropdown onSelectSender={selectAccount} accounts={accounts} />
                                 <Address label="To for Transaction 1" onChangeAddress={setReceiver1} />
                                 <Amount amount={amount1} label="Amount for Transaction 1" onChangeAmount={setAmount1} />
                                 <Address label="To for Transaction 2" onChangeAddress={setReceiver2} />

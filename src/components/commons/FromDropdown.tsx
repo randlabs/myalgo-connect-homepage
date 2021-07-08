@@ -1,5 +1,5 @@
 import { Accounts } from "@randlabs/myalgo-connect";
-import React, { Fragment, MouseEvent, ReactElement, useState } from "react";
+import React, { Fragment, MouseEvent, ReactElement, useState, useEffect } from "react";
 import { Dropdown, DropdownItem, DropdownMenu, DropdownToggle, FormGroup, Label } from "reactstrap";
 
 interface SenderDropdownProps {
@@ -9,9 +9,15 @@ interface SenderDropdownProps {
 }
 
 export default function SenderDropdown(props: SenderDropdownProps): JSX.Element {
-    const account = props.accounts &&  props.accounts.length > 0 ? props.accounts[0] : { name: "No wallet loaded" }
-    const [ sender, setSender ] = useState(account);
-    const [ isOpen, openDropdown ] = useState(false);
+    const account = props.accounts && props.accounts.length > 0 ? props.accounts[0] : { name: "No wallet loaded" }
+    const [sender, setSender] = useState(account);
+    const [isOpen, openDropdown] = useState(false);
+
+    useEffect(() => {
+        if(props.accounts.length > 0 ){
+            props.onSelectSender(props.accounts[0].address);
+        }
+    }, []);
 
     const onToggleSender = (event: MouseEvent) => {
         event.preventDefault();
@@ -35,7 +41,7 @@ export default function SenderDropdown(props: SenderDropdownProps): JSX.Element 
                 toggle={onToggleSender}>
                 <DropdownToggle caret disabled={props.disabled}>
                     <span className="text-ellipsis">
-                        {sender ? sender.name: "No account loaded"}
+                        {sender ? sender.name : "No account loaded"}
                     </span>
                 </DropdownToggle>
                 <DropdownMenu>
@@ -46,7 +52,7 @@ export default function SenderDropdown(props: SenderDropdownProps): JSX.Element 
                                 key={`account-${account.address}`}
                             >
                                 <span className="text-ellipsis">
-                                    {account ? account.name: "No account loaded"}
+                                    {account.name}
                                 </span>
                             </DropdownItem>
                         );

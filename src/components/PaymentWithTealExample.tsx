@@ -55,8 +55,9 @@ byte b32 $REPLACE_FOR_TXID
 `
 
 export default function SignTealExample(): JSX.Element {
-    const accountsList = window.sharedAccounts && Array.isArray(window.sharedAccounts) ? window.sharedAccounts : [];
-    const [accounts, setAccounts] = useState(accountsList);
+    const accountslist = window.sharedAccounts && Array.isArray(window.sharedAccounts) ? window.sharedAccounts : [];
+    const [accounts, setAccount] = useState(accountslist);
+    const [accountSelected, selectAccount] = useState("");
     const [note, setNote] = useState<Uint8Array | undefined>();
     const [receiver, setReceiver] = useState("");
     const [amount, setAmount] = useState(0);
@@ -89,7 +90,7 @@ export default function SignTealExample(): JSX.Element {
                     fee: 1000,
                     flatFee: true,
                 },
-                from: accounts[0].address,
+                from: accountSelected,
                 to: receiver, note,
                 amount: algosdk.algosToMicroalgos(amount),
             });
@@ -111,7 +112,7 @@ export default function SignTealExample(): JSX.Element {
             if (preparedTxn === null || teal.length === 0) return;
 
             const lsig = algosdk.makeLogicSig(new Uint8Array(Buffer.from(teal, "base64")));
-            connection.signLogicSig(lsig.logic, accounts[0].address).then(sig => {
+            connection.signLogicSig(lsig.logic, accountSelected).then(sig => {
                 lsig.sig = sig;
                 const signedTxn = algosdk.signLogicSigTransaction(preparedTxn, lsig);
                 setResponse(signedTxn);
@@ -147,7 +148,7 @@ export default function SignTealExample(): JSX.Element {
                 <TabPane tabId="1">
                     <Row className="mt-3">
                         <Col xs="12" lg="6" className="mt-2">
-                            <SenderDropdown onSelectSender={setAccounts} disabled={!!preparedTxn} accounts={accounts} />
+                            <SenderDropdown onSelectSender={selectAccount} disabled={!!preparedTxn} accounts={accounts} />
                             <Address label="To" onChangeAddress={setReceiver} disabled={!!preparedTxn} />
                             <Amount amount={amount} onChangeAmount={setAmount} disabled={!!preparedTxn} />
                             <Note onChangeNote={setNote} disabled={!!preparedTxn} />

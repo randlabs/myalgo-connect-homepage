@@ -54,8 +54,8 @@ const signedTxn = await myAlgoConnect.signTransaction(txn);
 `;
 
 export default function ASATransactionExample(): JSX.Element {
-    const accountsList = window.sharedAccounts && Array.isArray(window.sharedAccounts) ? window.sharedAccounts : [];
-    const [accounts, setAccounts] = useState(accountsList);
+    const accounts = window.sharedAccounts && Array.isArray(window.sharedAccounts) ? window.sharedAccounts : [];
+    const [accountSelected, selectAccount] = useState("");
     const [note, setNote] = useState<Uint8Array | undefined>();
     const [receiver, setReceiver] = useState("");
     const [amount, setAmount] = useState(0);
@@ -88,7 +88,7 @@ export default function ASATransactionExample(): JSX.Element {
                     fee: 1000,
                     flatFee: true,
                 },
-                from: accounts[0].address,
+                from: accountSelected,
                 to: receiver, note,
                 amount: algosdk.algosToMicroalgos(amount) * 100,
                 assetIndex: assetIndex
@@ -128,7 +128,7 @@ export default function ASATransactionExample(): JSX.Element {
                     <Row className="mt-3">
                         <Col xs="12" lg="6" className="mt-2">
                             <Form id="payment-tx" onSubmit={onSubmitAsaTransferTx}>
-                                <SenderDropdown onSelectSender={setAccounts} accounts={accounts} />
+                                <SenderDropdown onSelectSender={selectAccount} accounts={accounts} />
                                 <Address label="To" onChangeAddress={setReceiver} />
                                 <Amount amount={amount} decimals={8} onChangeAmount={setAmount} />
                                 <AssetIndex assetIndex={assetIndex} disabled={true} onChangeAssetIndex={setAssetIndex} />
