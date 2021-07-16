@@ -53,7 +53,7 @@ const txn = algosdk.makePaymentTxnWithSuggestedParamsFromObject({
   },
   from: sender,
   to: receiver,
-  Amount: amount
+  amount: amount
   note: note
 });
 ```
