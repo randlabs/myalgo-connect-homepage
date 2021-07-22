@@ -40,38 +40,33 @@ const Connect: FC<ConnectProps> = (props: ConnectProps): JSX.Element => {
     }
 
     return (
-        <Container className="mt-5">
-            <Row className="connect-content">
-                <Col xs="12" lg="4" >
-                    <div ref={ref} className={`from-small ${inView ? "appear" : ""}`}>
-                        <h1 >Connect</h1>
-                        <Button
-                            className="button-margin"
-                            color="primary"
-                            block
-                            onClick={connectToMyAlgo}>
-                            Connect
-                    </Button>
-                    </div>
-                </Col>
-                <Col xs="12" lg="8">
-                    <div ref={ref} className={`from-left ${inView ? "appear" : ""}`}>
-                        <div className="mb-3 install-code">
-                            <PrismCode
-                                code={installCode}
-                                language="js"
-                            />
-                        </div>
+        <div ref={ref} className={`custom-container from-small ${inView ? "appear" : ""}`}>
+            <div className="function">
+                <h1 className="title">
+                    Know your user
+                    </h1>
+                <h2 className="subtitle">
+                    Connect your dApp(s) with
+                    the user’s wallet(s).
+                    </h2>
+                <div className="button button-blue scale-on-hover" onClick={connectToMyAlgo}>
+                    Connect
+                </div>
+            </div>
+            <div ref={ref} className={`code-max-width from-right ${inView ? "appear" : ""}`}>
+                <div className="mb-3 install-code">
+                    <PrismCode
+                        code={installCode}
+                        language="js"
+                    />
+                </div>
 
-                        <PrismCode
-                            code={code}
-                            language="js"
-                        />
-                    </div>
-
-                </Col>
-            </Row>
-        </Container>
+                <PrismCode
+                    code={code}
+                    language="js"
+                />
+            </div>
+        </div>
     );
 }
 

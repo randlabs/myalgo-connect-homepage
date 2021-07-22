@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useInView } from 'react-intersection-observer';
-import { Button, Col, Container, Row } from "reactstrap";
 import { algodClient } from '../../utils/connections';
 import PrismCode from '../commons/Code';
 
@@ -24,34 +23,39 @@ export default function SendTransaction(props: any): JSX.Element {
         }
     }
 
-    return <Container className="mt-5 pb-5">
-        <Row>
-            <Col xs="12" lg="4">
-                <div ref={ref} className={`from-small ${inView ? "appear" : ""}`}>
-                    <h1>Send Transaction</h1>
-                    <Button color="primary" block onClick={onClickToSend} disabled={!props.txToSend}>
+    return (
+        <div ref={ref} className={`custom-container from-small ${inView ? "appear" : ""}`}>
+            <div className="function">
+                <div>
+                    <h1 className="title">
+                        Send it
+                   </h1>
+                    <h2 className="subtitle">
+                        Now you only need to send the
+                        user’s approved transaction to
+                        the Algorand blockchain and voilà!
+                    </h2>
+                    <div className="button button-blue scale-on-hover">
                         Send!
-                    </Button>
+                    </div>
                 </div>
-            </Col>
-            <Col xs="12" lg="8">
-                <div ref={ref} className={`from-left ${inView ? "appear" : ""}`}>
+            </div>
+            <div ref={ref} className={`code-max-width from-right ${inView ? "appear" : ""}`}>
+                <PrismCode
+                    code={code}
+                    language="js"
+                />
+            </div>
+
+            {response &&
+                <div ref={ref} className={`code-max-width from-bottom appear mt3`}>
                     <PrismCode
-                        code={code}
+                        code={response ? JSON.stringify(response, null, 1) : ""}
                         language="js"
+                        plugins={["response"]}
                     />
                 </div>
-
-                {response &&
-                    <div ref={ref} className={`from-small appear mt3`}>
-                        <PrismCode
-                            code={response ? JSON.stringify(response, null, 1) : ""}
-                            language="js"
-                            plugins={["response"]}
-                        />
-                    </div>
-                }
-            </Col>
-        </Row>
-    </Container>
+            }
+        </div>
+    )
 }

@@ -76,16 +76,21 @@ aside div a[tabindex="-1"] img {
   opacity: 0.8;
 }
 
+.navbar__items{
+  color: white !important;
+}
+
+/* 
 .menu__link--active, .navbar__link--active, .table-of-contents__link--active, .pagination-nav__label, .markdown a{
   color: var(--ifm-color-primary) !important;
-}
+} */
 
 .pagination-nav__link:hover {
   border-color: var(--ifm-color-primary) !important;;
 }
 
 .navbar__brand{
-  height: 45px;
+  height: 35px;
 }
 
 .navbar__toggle{
@@ -94,4 +99,12 @@ aside div a[tabindex="-1"] img {
 
 .markdown{
   margin-bottom: 20px;
+}
+
+.docusaurus-mt-lg{
+  padding-top: 3rem;
+}
+
+.custom-item-in-nav{
+  margin-right: 2rem;
 }

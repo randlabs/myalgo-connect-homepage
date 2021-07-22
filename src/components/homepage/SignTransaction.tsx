@@ -52,24 +52,51 @@ export default function SignTransaction(props: any): JSX.Element {
         }
     }
 
-    return <Container className="mt-5 pb-5">
-        <Row>
-            <Col xs="12" lg="4">
-                <div ref={ref} className={`from-small ${inView ? "appear" : ""}`}>
-                    <h1>Sign transaction</h1>
-                    <Button color="primary" block onClick={onClickPaymentTx} disabled={accounts.length === 0}>
+    return (
+        <div ref={ref} className={`custom-container from-small ${inView ? "appear" : ""}`}>
+            <div className="function">
+                <div>
+                    <h1 className="title">
+                        Let him sign
+                    </h1>
+                    <h2 className="subtitle">
+                        Time for the user to review and sign
+                        your transaction(s) interacting with
+                        My Algo Connect’s friendly UI.
+                     </h2>
+                    <div className="button button-blue scale-on-hover" onClick={onClickPaymentTx}>
                         Sign!
-                    </Button>
+                    </div>
                 </div>
-            </Col>
-            <Col xs="12" lg="8">
-                <div ref={ref} className={`from-left ${inView ? "appear" : ""}`}>
-                    <PrismCode
-                        code={code}
-                        language="js"
-                    />
-                </div>
-            </Col>
-        </Row>
-    </Container>
+            </div>
+            <div ref={ref} className={`code-max-width from-right ${inView ? "appear" : ""}`}>
+                <PrismCode
+                    code={code}
+                    language="js"
+                />
+            </div>
+        </div>
+        
+    )
+
+    // <Container className="mt-5 pb-5">
+    //     <Row>
+    //         <Col xs="12" lg="4">
+    //             <div ref={ref} className={`from-small ${inView ? "appear" : ""}`}>
+    //                 <h1>Sign transaction</h1>
+    //                 <Button color="primary" block onClick={onClickPaymentTx} disabled={accounts.length === 0}>
+    //                         Sign!
+    //                 </Button>
+    //             </div>
+    //         </Col>
+    //         <Col xs="12" lg="8">
+    //             <div ref={ref} className={`from-left ${inView ? "appear" : ""}`}>
+    //                 <PrismCode
+    //                     code={code}
+    //                     language="js"
+    //                 />
+    //             </div>
+    //         </Col>
+    //     </Row>
+    // </Container>
 }

@@ -7,3 +7,9 @@ export function validateAddress(address: string): boolean {
 
 	return algosdk.isValidAddress(address);
 }
+
+export async function sleep(milliseconds: number): Promise<void> {
+	return new Promise((resolve): void => {
+		setTimeout(resolve, milliseconds);
+	});
+}
