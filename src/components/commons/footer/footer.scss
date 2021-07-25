@@ -1,0 +1,110 @@
+.footer {
+    display: none !important;
+}
+
+.section5 {
+    text-align: center;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    .custom-container {
+        padding-top: 2rem;
+        padding-bottom: 2rem;
+        width: 100%;
+    }
+
+    .row1 {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+
+        .left {
+            padding: 2rem;
+
+            img {
+                height: 80px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            justify-content: center;
+        }
+
+        .right {
+            .icons {
+                padding: 1rem;
+
+                img {
+                    margin-right: 2rem;
+                    height: 44px;
+                    width: 44px;
+                    cursor: pointer;
+                }
+
+                .contact-us {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    border: 1px solid;
+                    height: 33px;
+                    width: 120px;
+                    border-radius: 5px;
+                    cursor: pointer;
+
+                    a {
+                        color: black;
+                    }
+
+                    @media (max-width: 600px) {
+                        margin-top: 2rem;
+                    }
+                }
+
+                .aligned {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    flex-direction: row;
+                    flex-wrap: wrap;
+                }
+            }
+        }
+    }
+
+    .title {
+        font-size: 1.375rem;
+        font-weight: 500;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+
+        .link {
+            color: #245ec7;
+            cursor: pointer;
+            text-decoration: underline;
+            padding-left: 10px;
+        }
+    }
+
+    .powered {
+        color: #245ec7;
+        cursor: pointer;
+    }
+
+    .row2 {
+        margin-top: 1.375rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        @media (max-width: 600px) {
+           flex-direction: column;
+        }
+    }
+}

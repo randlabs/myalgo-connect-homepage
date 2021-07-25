@@ -35,27 +35,27 @@ export default function SendTransaction(props: any): JSX.Element {
                         user’s approved transaction to
                         the Algorand blockchain and voilà!
                     </h2>
-                    <div className="button button-blue scale-on-hover">
+                    <div className={`button button-blue scale-on-hover ${props.txToSend ? "" : "disabled"}`} onClick={onClickToSend}>
                         Send!
                     </div>
                 </div>
             </div>
-            <div ref={ref} className={`code-max-width from-right ${inView ? "appear" : ""}`}>
-                <PrismCode
-                    code={code}
-                    language="js"
-                />
-            </div>
+            <div>
+                <div ref={ref} className={`code-max-width from-right ${inView ? "appear" : ""}`}>
+                    <PrismCode
+                        code={code}
+                        language="js"
+                    />
+                </div>
 
-            {response &&
-                <div ref={ref} className={`code-max-width from-bottom appear mt3`}>
+                <div ref={ref} className={`code-max-width from-bottom ${response ? "appear" : "hidden"} mt-2`}>
                     <PrismCode
                         code={response ? JSON.stringify(response, null, 1) : ""}
                         language="js"
                         plugins={["response"]}
                     />
                 </div>
-            }
+            </div>
         </div>
     )
 }

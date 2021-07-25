@@ -43,6 +43,11 @@ a{
 
 aside div a[class^="sidebarLogo_node_modules"]{
   background-color: var(--ifm-color-primary) !important;
+
+}
+
+aside div a[class^="sidebarLogo_node_modules"] img {
+  height: 35px !important;
 }
 
 aside div a[tabindex="-1"] {
@@ -107,4 +112,8 @@ aside div a[tabindex="-1"] img {
 
 .custom-item-in-nav{
   margin-right: 2rem;
+}
+
+.myalgo-logo-sidebar{
+  height: 35px;
 }

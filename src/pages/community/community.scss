@@ -1,0 +1,160 @@
+@import "../../css/animation";
+@import "../../css/base.scss";
+
+.community {
+    .section1 {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .custom-container {
+            margin-top: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-direction: row;
+            width: 100%;
+
+            @media (max-width: 950px) {
+                // flex-direction: column;
+                flex-wrap: wrap-reverse;
+            }
+
+            .left {
+                max-width: 600px;
+
+                .subtitle {
+                    padding-top: 2rem;
+                }
+
+                @media (max-width: 950px) {
+                    margin-top: 2rem;
+                }
+            }
+
+            .right {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                animation-name: myalgo;
+                animation-duration: 3s;
+                text-align: center;
+                width: 100%;
+
+                @keyframes myalgo {
+                    0% {
+                        transform: scale(0);
+                    }
+                    50% {
+                        transform: scale(1.3);
+                    }
+                    100% {
+                        transform: scale(1);
+                    }
+                }
+
+                @media (max-width: 950px) {
+                    margin-top: 2rem;
+                }
+
+                img {
+                    height: 132px;
+                    width: 258px;
+
+                    @media (max-width: 950px) {
+                        height: 93px;
+                        width: 180px;
+                    }
+                }
+            }
+        }
+    }
+
+    .section2 {
+        margin-top: 150px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+
+        .row1 {
+            background: linear-gradient(180deg, #ffffff 11.98%, #ececec 100%);
+            box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+            border-radius: 10px;
+            height: 200px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: row;
+
+            @media (max-width: 750px) {
+                flex-direction: column;
+                height: auto;
+            }
+
+            .left {
+                padding: 2.5rem;
+
+                img {
+                    height: 85px;
+                    width: 192px;
+                }
+            }
+
+            .right {
+                padding: 2.5rem;
+            }
+
+            .vertical-line {
+                width: 0px;
+                height: 132px;
+                border: 1px solid #000000;
+
+                @media (max-width: 750px) {
+                    display: none;
+                }
+            }
+        }
+
+        .button {
+            margin-top: -2rem;
+
+            @media (max-width: 600px) {
+                margin-top: -1.3rem;
+            }
+        }
+    }
+
+    .section3 {
+        margin-top: 150px;
+        margin-bottom: 150px;
+        text-align: center;
+
+        h1 {
+            font-size: 3rem;
+        }
+
+        .message {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 4rem;
+
+            .button {
+                border-radius: 2px;
+                padding: 0 5rem;
+                font-size: 30px;
+                background: linear-gradient(180deg, #245ec7 40.63%, #1b489b 100%);
+                border-radius: 5px;
+                width: 300px;
+                height: 64px;
+
+                @media (max-width: 600px) {
+                    width: 200px;
+                    height: 45px;
+                    font-size: 18px;
+                }
+            }
+        }
+    }
+}

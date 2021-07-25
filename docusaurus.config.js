@@ -32,10 +32,6 @@ module.exports = {
         alt: 'MyAlgo Connect',
         src: 'img/logo.svg',
       },
-      logo: {
-        alt: 'MyAlgo Connect',
-        src: 'img/logo.svg',
-      },
       items: [
         {
           type: 'doc',
@@ -45,7 +41,7 @@ module.exports = {
           className: 'custom-item-in-nav',
         },
         {
-          to: '/community',
+          to: 'community',
           label: 'Community',
           position: 'right',
           className: 'custom-item-in-nav',

@@ -1,7 +1,6 @@
 import algosdk from "algosdk";
 import React, { useContext } from "react";
 import { useInView } from 'react-intersection-observer';
-import { Button, Col, Container, Row } from "reactstrap";
 import { AccountsContext } from "../../context/accountsContext";
 import { ParamsContext } from "../../context/paramsContext";
 import { connection } from '../../utils/connections';
@@ -64,7 +63,7 @@ export default function SignTransaction(props: any): JSX.Element {
                         your transaction(s) interacting with
                         My Algo Connect’s friendly UI.
                      </h2>
-                    <div className="button button-blue scale-on-hover" onClick={onClickPaymentTx}>
+                    <div className={`button button-blue scale-on-hover ${accounts.length > 0 ? "": "disabled"}`} onClick={onClickPaymentTx}>
                         Sign!
                     </div>
                 </div>

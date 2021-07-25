@@ -1,0 +1,105 @@
+@import "./animation";
+
+.main-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    .custom-container {
+        max-width: 1000px;
+    }
+
+    section {
+        padding: 1rem;
+    }
+
+    h1 {
+        font-size: 3.75rem;
+    }
+
+    h2 {
+        font-size: 1.375rem;
+    }
+
+    .button-blue {
+        width: 240px;
+        height: 60px;
+        background: #245ec7;
+        font-weight: 500;
+        border-radius: 50px;
+        border-color: white;
+        font-size: 1.65rem;
+        cursor: pointer;
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: 1px solid #245ec7;
+
+        &.disabled {
+            cursor: none;
+            pointer-events: none;
+            background: #384d72 !important;
+            border-color: #384d72;
+        }
+    }
+
+    .button-black {
+        width: 240px;
+        height: 60px;
+        background: black;
+        font-weight: 500;
+        border-radius: 50px;
+        border-color: black;
+        font-size: 1.65rem;
+        cursor: pointer;
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: 1px solid black;
+
+        &.disabled {
+            cursor: none;
+            pointer-events: none;
+            background: #384d72 !important;
+            border-color: #384d72;
+        }
+    }
+
+    .button-blue:hover {
+        background-color: #1e65e6;
+        border: 1px solid #1e65e6;
+    }
+
+    .button-blue-2:hover {
+        background: linear-gradient(180deg, #1e65e6 40.63%, #1e65e6 100%) !important;
+    }
+
+    .button-black:hover {
+        opacity: 0.75;
+    }
+
+    @media (max-width: 600px) {
+        h1 {
+            font-size: 2.25rem !important;
+        }
+
+        h2 {
+            font-size: 1.2rem !important;
+        }
+
+        .button-blue {
+            width: 160px;
+            height: 40px;
+            font-size: 1.25rem;
+        }
+    
+        .button-black {
+            width: 160px;
+            height: 40px;
+            font-size: 1.25rem;
+        }
+    }
+}

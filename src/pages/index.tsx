@@ -14,6 +14,9 @@ import './index.scss';
 import { useInView } from 'react-intersection-observer';
 import { sleep } from '../utils/algorand';
 import { HardwareIcon, ExtensionIcon, FeatureIcon, WarningIcon } from './GlobalSvgIcons'
+import FooterSection from '../components/commons/footer/footer';
+import "../components/commons/footer/footer.scss";
+
 let timeoutResolution = null;
 
 export default function Home() {
@@ -25,7 +28,7 @@ export default function Home() {
   const [slideIn, setSlideIn] = useState(true);
   const [slideOut, setSlideOut] = useState(false);
   const [shouldDisplay, setShouldDisplay] = useState(0);
-  const { ref, inView, entry } = useInView({ threshold: 0.3});
+  const { ref, inView, entry } = useInView({ threshold: 0.3 });
   const blue = "#245EC7";
   const white = "white";
 
@@ -91,170 +94,135 @@ export default function Home() {
     <Layout
       title={`Hello from ${siteConfig.title}`}
       description="Description will go into a meta tag in <head />">
-
-      <section className="section1">
-        <div className="custom-container">
-          <div className="left">
-            <h1 className="title">
-              Dapp gateways have never been easier
-            </h1>
-            <h2 className="subtitle">
-              Connect your application to Algorand while allowing your user to interact with it in the simplest and most secure way.
-            </h2>
-            <div className="connect-button">
-              <div className="button-blue scale-on-hover">Get Connect</div>
-            </div>
-          </div>
-          <div className="right">
-            <img src="../static/img/myalgo-connect-tour.gif" className="gif" />
-          </div>
-        </div>
-        <h1 className="message">
-          An intuitive UI inspired by users
-        </h1>
-      </section>
-
-      <section className="section2">
-        <div className="custom-container">
-          <h2 className="message">
-            Connect your application to Algorand while allowing your user to interact with it in the simplest and most secure way.
-          </h2>
-
-          <div ref={ref}>
-            <div className={clsx("feature-section")}>
-              <div className={clsx("left", "from-left", selectIcon === 0 && slideIn ? "appear" : "", selectIcon !== 0 && slideOut ? "disappear" : "", shouldDisplay === 0 ? "" : "hidden")}>
-                <img src="../static/img/hardware.svg" alt="" />
-              </div>
-              <div className={clsx("left", "from-left", selectIcon === 1 && slideIn ? "appear" : "", selectIcon !== 1 && slideOut ? "disappear" : "", shouldDisplay === 1 ? "" : "hidden")}>
-                <img src="../static/img/extension.svg" alt="" />
-              </div>
-
-              <div className={clsx("left", "from-left", selectIcon === 2 && slideIn ? "appear" : "", selectIcon !== 2 && slideOut ? "disappear" : "", shouldDisplay === 2 ? "" : "hidden")}>
-                <img src="../static/img/feature.svg" alt="" />
-              </div>
-
-              <div className={clsx("left", "from-left", selectIcon === 3 && slideIn ? "appear" : "", selectIcon !== 3 && slideOut ? "disappear" : "", shouldDisplay === 3 ? "" : "hidden")}>
-                <img src="../static/img/warning.svg" alt="" />
-              </div>
-
-              <div className="right">
-                {renderIconSection()}
-
-                <div className={clsx("from-right", selectIcon === 0 && slideIn ? "appear" : "", selectIcon !== 0 && slideOut ? "disappear" : "", shouldDisplay === 0 ? "" : "hidden")}>
-                  <h1 className="title">
-                    Hardware wallet support
-                  </h1>
-                  <h2 className="subtitle">
-                    Connect your users to their favorite hardware wallets like Ledger Nano X or S, giving them the tools to interact with your dApp in the most secure way.
-                  </h2>
-                </div>
-
-                <div className={clsx("from-right", selectIcon === 1 && slideIn ? "appear" : "", selectIcon !== 1 && slideOut ? "disappear" : "", shouldDisplay === 1 ? "" : "hidden")}>
-                  <h1 className="title">
-                    Forget about extensions
-                  </h1>
-                  <h2 className="subtitle">
-                    My Algo Connect is managed in the user’s browser without any backend service, downloads, extensions, or browser plugins providing a simpler intuitive interaction.
-                  </h2>
-                </div>
-
-                <div className={clsx("from-right", selectIcon === 2 && slideIn ? "appear" : "", selectIcon !== 2 && slideOut ? "disappear" : "", shouldDisplay === 2 ? "" : "hidden")}>
-                  <h1 className="title">
-                    Advanced Features
-                  </h1>
-                  <h2 className="subtitle">
-                    Power up your dApp’s UX with My Algo Connect advanced features like bulk and group transactions, full transaction overviews, warning alerts, and more. Multiple transactions can be signed at the same time, giving your users the best experience.
-                  </h2>
-                </div>
-
-                <div className={clsx("from-right", selectIcon === 3 && slideIn ? "appear" : "", selectIcon !== 3 && slideOut ? "disappear" : "", shouldDisplay === 3 ? "" : "hidden")}>
-                  <h1 className="title">
-                    Warning Alerts
-                  </h1>
-                  <h2 className="subtitle">
-                    Users will receive clear and visible alerts, raising their awareness when they rekey or empty an account, modify or destroy an asset, update or delete an application from the ledger. Your users have never felt safer interacting with the blockchain.
-                  </h2>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="section3">
-        <div ref={ref} className={clsx("from-bottom", "custom-container", inView ? "appear" : "")}>
-          <h1 className="title">
-            Simplify your work, while giving a great experience to your dApp users
-          </h1>
-          <h2 className="subtitle">
-            Compatible with all browsers, including Safari and smartphones.
-          </h2>
-        </div>
-      </section>
-
-      <section className="section4">
-        <div className="custom-container">
-          <div className="row1">
-            <h1 className="title">
-              An SDK for developers, <br />
-              by developers
-            </h1>
-            <h2 className="subtitle">
-              Start connecting your users with <br />
-              your dApp in three simple steps.
-            </h2>
-          </div>
-          <div className="code-section">
-            <Connect
-              connection={connection}
-              onComplete={onCompleteConnect}
-            />
-            <ParamsProvider params={params}>
-              <AccountsProvider accounts={accounts}>
-                <SignTransaction callbackSignedTxn={callbackSignedTxn} />
-              </AccountsProvider>
-            </ParamsProvider>
-            <SendTransaction txToSend={txToSend} />
-          </div>
-        </div>
-      </section>
-
-      <section className="section5">
-        <div className="custom-container">
-          <div className="row1">
+      <div className="homepage">
+        <section className="section1">
+          <div className="custom-container">
             <div className="left">
-              <img src="../static/img/connect-icon.svg" alt="" className="logo" />
+              <h1 className="title">
+                Dapp gateways have never been easier
+            </h1>
+              <h2 className="subtitle">
+                Connect your application to Algorand while allowing your user to interact with it in the simplest and most secure way.
+            </h2>
+              <div className="connect-button">
+                <a href="/docs/introduction"><div className="button-blue scale-on-hover">Get Started</div></a>
+              </div>
             </div>
             <div className="right">
-              <div className="title">
-                <div className="first-name">Visit MyAlgo Wallet </div>
-                <a className="link scale-on-hover" href="https://mywalgo.com/home"> here </a>
-              </div>
-              <div className="icons">
-                <div className="aligned">
-                  <a href="https://github.com/randlabs/myalgo-connect"><img src="../static/img/github-icon.svg" alt="" className="scale-on-hover" /></a>
-                  <a href="https://twitter.com/myalgo_"><img src="../static/img/twitter-icon.svg" alt="" className="scale-on-hover" /></a>
-                  <a href="https://medium.com/randlabs"><img src="../static/img/mm-icon.svg" alt="" className="scale-on-hover" /></a>
-                  <div className="contact-us scale-on-hover">
-                    <a href="https://randlabs.io/contact">
-                      Contact Us &nbsp; &gt;
-                    </a>
+              <img src="../static/img/myalgo-connect-tour.gif" className="gif" />
+            </div>
+          </div>
+          <h1 className="message">
+            An intuitive UI inspired by users
+        </h1>
+        </section>
+
+        <section className="section2">
+          <div className="custom-container">
+            <h2 className="message">
+              Connect your application to Algorand while allowing your user to interact with it in the simplest and most secure way.
+          </h2>
+
+            <div ref={ref}>
+              <div className={clsx("feature-section")}>
+                <div className={clsx("left", "from-left", selectIcon === 0 && slideIn ? "appear" : "", selectIcon !== 0 && slideOut ? "disappear" : "", shouldDisplay === 0 ? "" : "hidden")}>
+                  <img src="../static/img/hardware.svg" alt="" />
+                </div>
+                <div className={clsx("left", "from-left", selectIcon === 1 && slideIn ? "appear" : "", selectIcon !== 1 && slideOut ? "disappear" : "", shouldDisplay === 1 ? "" : "hidden")}>
+                  <img src="../static/img/extension.svg" alt="" />
+                </div>
+
+                <div className={clsx("left", "from-left", selectIcon === 2 && slideIn ? "appear" : "", selectIcon !== 2 && slideOut ? "disappear" : "", shouldDisplay === 2 ? "" : "hidden")}>
+                  <img src="../static/img/feature.svg" alt="" />
+                </div>
+
+                <div className={clsx("left", "from-left", selectIcon === 3 && slideIn ? "appear" : "", selectIcon !== 3 && slideOut ? "disappear" : "", shouldDisplay === 3 ? "" : "hidden")}>
+                  <img src="../static/img/warning.svg" alt="" />
+                </div>
+
+                <div className="right">
+                  {renderIconSection()}
+
+                  <div className={clsx("from-right", selectIcon === 0 && slideIn ? "appear" : "", selectIcon !== 0 && slideOut ? "disappear" : "", shouldDisplay === 0 ? "" : "hidden")}>
+                    <h1 className="title">
+                      Hardware wallet support
+                  </h1>
+                    <h2 className="subtitle">
+                      Connect your users to their favorite hardware wallets like Ledger Nano X or S, giving them the tools to interact with your dApp in the most secure way.
+                  </h2>
+                  </div>
+
+                  <div className={clsx("from-right", selectIcon === 1 && slideIn ? "appear" : "", selectIcon !== 1 && slideOut ? "disappear" : "", shouldDisplay === 1 ? "" : "hidden")}>
+                    <h1 className="title">
+                      Forget about extensions
+                  </h1>
+                    <h2 className="subtitle">
+                      My Algo Connect is managed in the user’s browser without any backend service, downloads, extensions, or browser plugins providing a simpler intuitive interaction.
+                  </h2>
+                  </div>
+
+                  <div className={clsx("from-right", selectIcon === 2 && slideIn ? "appear" : "", selectIcon !== 2 && slideOut ? "disappear" : "", shouldDisplay === 2 ? "" : "hidden")}>
+                    <h1 className="title">
+                      Advanced Features
+                  </h1>
+                    <h2 className="subtitle">
+                      Power up your dApp’s UX with My Algo Connect advanced features like bulk and group transactions, full transaction overviews, warning alerts, and more. Multiple transactions can be signed at the same time, giving your users the best experience.
+                  </h2>
+                  </div>
+
+                  <div className={clsx("from-right", selectIcon === 3 && slideIn ? "appear" : "", selectIcon !== 3 && slideOut ? "disappear" : "", shouldDisplay === 3 ? "" : "hidden")}>
+                    <h1 className="title">
+                      Warning Alerts
+                  </h1>
+                    <h2 className="subtitle">
+                      Users will receive clear and visible alerts, raising their awareness when they rekey or empty an account, modify or destroy an asset, update or delete an application from the ledger. Your users have never felt safer interacting with the blockchain.
+                  </h2>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          <div className="row2">
-            <div className="right-reserved">
-              © 2021 My Algo Connect. All Rights Reserved. 
-            </div>
-            <a href="https://randlabs.io" className="powered scale-on-hover">
-              &nbsp; Powered by Randlabs
-            </a>
-          </div>
-        </div>
-      </section>
+        </section>
 
+        <section className="section3">
+          <div ref={ref} className={clsx("from-bottom", "custom-container", inView ? "appear" : "")}>
+            <h1 className="title">
+              Simplify your work, while giving a great experience to your dApp users
+          </h1>
+            <h2 className="subtitle">
+              Compatible with all browsers, including Safari and smartphones.
+          </h2>
+          </div>
+        </section>
+
+        <section className="section4">
+          <div className="custom-container">
+            <div className="row1">
+              <h1 className="title">
+                An SDK for developers, <br />
+              by developers
+            </h1>
+              <h2 className="subtitle">
+                Start connecting your users with <br />
+              your dApp in three simple steps.
+            </h2>
+            </div>
+            <div className="code-section">
+              <Connect
+                connection={connection}
+                onComplete={onCompleteConnect}
+              />
+              <ParamsProvider params={params}>
+                <AccountsProvider accounts={accounts}>
+                  <SignTransaction callbackSignedTxn={callbackSignedTxn} />
+                </AccountsProvider>
+              </ParamsProvider>
+              <SendTransaction txToSend={txToSend} />
+            </div>
+          </div>
+        </section>
+      </div>
+      <FooterSection />
     </Layout>
   );
 }
