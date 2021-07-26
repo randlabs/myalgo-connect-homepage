@@ -1,7 +1,6 @@
 import MyAlgo, { Accounts } from '@randlabs/myalgo-connect';
 import React, { FC, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
-import { Button, Col, Container, Row } from 'reactstrap';
 import PrismCode from '../commons/Code';
 import "./homepage.scss";
 
@@ -23,7 +22,7 @@ const accountsSharedByUser = await myAlgoConnect.connect();
 const Connect: FC<ConnectProps> = (props: ConnectProps): JSX.Element => {
 
     const [accounts, setAccounts] = useState<Accounts[]>([]);
-    const { ref, inView, entry } = useInView({ threshold: 0.5 });
+    const { ref, inView, entry } = useInView({ threshold: 1, triggerOnce: true });
 
     const connectToMyAlgo = async (): Promise<void> => {
         try {

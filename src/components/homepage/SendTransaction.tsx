@@ -13,7 +13,7 @@ const response = await algodClient.sendRawTransaction(signedTxn.blob).do();
 
 export default function SendTransaction(props: any): JSX.Element {
     const [response, setResponse] = useState("");
-    const { ref, inView, entry } = useInView({ threshold: 0.5 });
+    const { ref, inView, entry } = useInView({ threshold: 1, triggerOnce: true });
     const onClickToSend = async (): Promise<void> => {
         try {
             const res = await algodClient.sendRawTransaction(props.txToSend.blob).do();

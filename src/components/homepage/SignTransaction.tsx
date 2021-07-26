@@ -24,7 +24,7 @@ export default function SignTransaction(props: any): JSX.Element {
     const accounts = useContext(AccountsContext);
 
     const account = accounts && accounts.length > 0 ? accounts[0].address : "";
-    const { ref, inView, entry } = useInView({ threshold: 0.5 });
+    const { ref, inView, entry } = useInView({ threshold: 1, triggerOnce: true });
 
     const onClickPaymentTx = async (): Promise<void> => {
 

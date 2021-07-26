@@ -17,9 +17,9 @@
                 .gif {
                     height: 470px;
                     width: 302px;
-                    box-shadow: rgb(0, 0, 0 / 24%) 0px 3px 8px;
+                    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
                     border-radius: 11px;
-                    animation: 600ms ease-out 0s gif-translate;
+                    animation: 400ms ease-out 0s gif-translate;
                     animation-fill-mode: forwards;
                 }
 
@@ -108,7 +108,7 @@
                 align-items: center;
                 margin-right: 1rem;
                 padding: 0.8rem;
-                box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
+                box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
 
                 cursor: pointer;
 
@@ -198,6 +198,10 @@
         .custom-container {
             padding: 4rem;
             text-align: center;
+
+            @media (max-width: 6000px) {
+                padding: 2rem 0rem;
+            }
         }
 
         h1 {
@@ -225,7 +229,7 @@
 
         .custom-container {
             padding-top: 4rem;
-            padding-bottom: 4rem;
+            padding-bottom: 2rem;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -233,7 +237,7 @@
 
             @media (max-width: 990px) {
                 padding-top: 2rem;
-                padding-bottom: 1rem;
+                padding-bottom: 0rem;
             }
         }
 
@@ -242,7 +246,7 @@
 
             @media (max-width: 990px) {
                 margin-top: 2rem;
-                max-width: calc(95vw);
+                max-width: calc(86vw);
             }
 
             @media (max-width: 600px) {
@@ -349,6 +353,10 @@
                 text-align: left;
                 max-width: 35%;
 
+                @media (max-width: 600px) {
+                    padding: 0.3rem;
+                }
+
                 .title {
                     font-size: 2.5rem;
                 }
@@ -371,7 +379,7 @@
                 }
 
                 pre {
-                    width: calc(95vw);
+                    width: calc(86vw);
                 }
             }
 
