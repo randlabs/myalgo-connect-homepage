@@ -47,7 +47,7 @@ module.exports = {
           className: 'custom-item-in-nav',
         },
         {
-          href: 'https://github.com/randlabs/myalgo-connect-homepage',
+          href: 'https://github.com/randlabs/myalgo-connect/releases',
           position: 'right',
           className: 'header-github-link',
           'aria-label': 'GitHub repository',

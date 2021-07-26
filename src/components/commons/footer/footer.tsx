@@ -11,15 +11,11 @@ export default function Footer() {
             <img src="../static/img/connect-icon.svg" alt="" className="logo" />
           </div>
           <div className="right">
-            <div className="title">
-              <div className="first-name">Visit MyAlgo Wallet </div>
-              <a className="link scale-on-hover" href="https://myalgo.com/home"> here </a>
-            </div>
             <div className="icons">
               <div className="aligned">
-                <a href="https://github.com/randlabs/myalgo-connect"><img src="../static/img/github-icon.svg" alt="" className="scale-on-hover" /></a>
+                <a href="https://github.com/randlabs/myalgo-connect/releases"><img src="../static/img/github-icon.svg" alt="" className="scale-on-hover" /></a>
                 <a href="https://twitter.com/myalgo_"><img src="../static/img/twitter-icon.svg" alt="" className="scale-on-hover" /></a>
-                <a href="https://medium.com/randlabs"><img src="../static/img/mm-icon.svg" alt="" className="scale-on-hover" /></a>
+                <a href="https://medium.com/randlabs"><img src="../static/img/mm-icon.svg" alt="" className="scale-on-hover medium" /></a>
                 <div className="contact-us scale-on-hover">
                   <a href="https://randlabs.io/contact">
                     Contact Us &nbsp; &gt;

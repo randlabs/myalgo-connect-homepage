@@ -4,7 +4,7 @@ import React from 'react';
 import FooterSection from '../../components/commons/footer/footer';
 import "./community.scss";
 import Layout from '@theme/Layout';
-import { AlgoIcon } from '../GlobalSvgIcons';
+import { AlgoIcon, DiscordIcon } from '../GlobalSvgIcons';
 
 export default function Community() {
     return (
@@ -15,7 +15,8 @@ export default function Community() {
                         <div className="left">
                             <h1 className="title">Need some support?  join the community!</h1>
                             <h2 className="subtitle">The best place to discuss and ask questions to the MyAlgo Connect team and the community of developers building on it is the Algorand Discord channel:</h2>
-                            <a href="https://forum.algorand.org/" className="button button-black mt-5">Join Discord</a>
+                            <a href="https://discord.com/channels/491256308461207573/817420411502329896" className="button button-black mt-5">
+                                <DiscordIcon fill="white"/>  &nbsp; Join Discord </a>
                         </div>
                         <div className="right">
                             <img src="../static/img/connect-icon.svg" alt="" className="logo" />
@@ -31,7 +32,7 @@ export default function Community() {
                             <h2 className="right">Another place to post questions is the Algorand Forum, you can take advantage of this forum to ask questions not only related to MyAlgo Connect but also about the AlgoSDK or any other topics.</h2>
                         </div>
                     </div>
-                    <a href="https://forum.algorand.org/" className="button button-black">Join Algorand</a>
+                    <a href="https://forum.algorand.org/" className="button button-black">Algorand Forum</a>
                 </section>
 
                 <section className="section3">
