@@ -188,7 +188,7 @@
                 }
 
                 .message-item{
-                    min-height: 436px;
+                    min-height: 267px;
                 }
             }
         }
@@ -198,14 +198,6 @@
         .custom-container {
             padding: 4rem;
             text-align: center;
-
-            @media (max-width: 600px) {
-                padding: 2rem;
-
-                &.from-bottom {
-                    transform: translateY(0);
-                }
-            }
         }
 
         h1 {

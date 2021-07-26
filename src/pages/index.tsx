@@ -28,7 +28,7 @@ export default function Home() {
   const [slideIn, setSlideIn] = useState(true);
   const [slideOut, setSlideOut] = useState(false);
   const [shouldDisplay, setShouldDisplay] = useState(0);
-  const { ref, inView, entry } = useInView({ threshold: 1 });
+  const { ref, inView, entry } = useInView({ threshold: 0.5 });
   const blue = "#245EC7";
   const white = "white";
 
@@ -185,7 +185,7 @@ export default function Home() {
         </section>
 
         <section className="section3">
-          <div ref={ref} className={clsx("from-bottom", "custom-container", inView ? "appear" : "")}>
+          <div ref={ref} className={clsx("from-small", "custom-container", inView ? "appear" : "")}>
             <h1 className="title">
               Simplify your work, while giving a great experience to your dApp users
           </h1>
