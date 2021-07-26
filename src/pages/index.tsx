@@ -28,7 +28,7 @@ export default function Home() {
   const [slideIn, setSlideIn] = useState(true);
   const [slideOut, setSlideOut] = useState(false);
   const [shouldDisplay, setShouldDisplay] = useState(0);
-  const { ref, inView, entry } = useInView({ threshold: 0.3 });
+  const { ref, inView, entry } = useInView({ threshold: 1 });
   const blue = "#245EC7";
   const white = "white";
 
@@ -143,7 +143,7 @@ export default function Home() {
                 <div className="right">
                   {renderIconSection()}
 
-                  <div className={clsx("from-right", selectIcon === 0 && slideIn ? "appear" : "", selectIcon !== 0 && slideOut ? "disappear" : "", shouldDisplay === 0 ? "" : "hidden")}>
+                  <div className={clsx("from-right", "message-item", selectIcon === 0 && slideIn ? "appear" : "", selectIcon !== 0 && slideOut ? "disappear" : "", shouldDisplay === 0 ? "" : "hidden")}>
                     <h1 className="title">
                       Hardware wallet support
                   </h1>
@@ -152,7 +152,7 @@ export default function Home() {
                   </h2>
                   </div>
 
-                  <div className={clsx("from-right", selectIcon === 1 && slideIn ? "appear" : "", selectIcon !== 1 && slideOut ? "disappear" : "", shouldDisplay === 1 ? "" : "hidden")}>
+                  <div className={clsx("from-right", "message-item", selectIcon === 1 && slideIn ? "appear" : "", selectIcon !== 1 && slideOut ? "disappear" : "", shouldDisplay === 1 ? "" : "hidden")}>
                     <h1 className="title">
                       Forget about extensions
                   </h1>
@@ -161,7 +161,7 @@ export default function Home() {
                   </h2>
                   </div>
 
-                  <div className={clsx("from-right", selectIcon === 2 && slideIn ? "appear" : "", selectIcon !== 2 && slideOut ? "disappear" : "", shouldDisplay === 2 ? "" : "hidden")}>
+                  <div className={clsx("from-right", "message-item", selectIcon === 2 && slideIn ? "appear" : "", selectIcon !== 2 && slideOut ? "disappear" : "", shouldDisplay === 2 ? "" : "hidden")}>
                     <h1 className="title">
                       Advanced Features
                   </h1>
@@ -170,7 +170,7 @@ export default function Home() {
                   </h2>
                   </div>
 
-                  <div className={clsx("from-right", selectIcon === 3 && slideIn ? "appear" : "", selectIcon !== 3 && slideOut ? "disappear" : "", shouldDisplay === 3 ? "" : "hidden")}>
+                  <div className={clsx("from-right", "message-item", selectIcon === 3 && slideIn ? "appear" : "", selectIcon !== 3 && slideOut ? "disappear" : "", shouldDisplay === 3 ? "" : "hidden")}>
                     <h1 className="title">
                       Warning Alerts
                   </h1>

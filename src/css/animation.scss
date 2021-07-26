@@ -58,7 +58,7 @@
 
 .from-bottom {
     transform: translateY(50%);
-    transition: opacity 1s ease-in, transform 1s ease-in;
+    transition: opacity 600ms ease-in, transform 600ms ease-in;
     opacity: 0;
 }
 
