@@ -62,11 +62,11 @@ export default function Home() {
     setSlideIn(false);
     setSelectedIcon(toDisplay);
 
-    sleep(800).then(() => {
+    sleep(400).then(() => {
       setShouldDisplay(toDisplay);
     })
 
-    sleep(1000).then(() => {
+    sleep(500).then(() => {
       setSlideIn(true)
     })
   }

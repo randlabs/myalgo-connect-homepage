@@ -77,25 +77,4 @@ export default function SignTransaction(props: any): JSX.Element {
         </div>
         
     )
-
-    // <Container className="mt-5 pb-5">
-    //     <Row>
-    //         <Col xs="12" lg="4">
-    //             <div ref={ref} className={`from-small ${inView ? "appear" : ""}`}>
-    //                 <h1>Sign transaction</h1>
-    //                 <Button color="primary" block onClick={onClickPaymentTx} disabled={accounts.length === 0}>
-    //                         Sign!
-    //                 </Button>
-    //             </div>
-    //         </Col>
-    //         <Col xs="12" lg="8">
-    //             <div ref={ref} className={`from-left ${inView ? "appear" : ""}`}>
-    //                 <PrismCode
-    //                     code={code}
-    //                     language="js"
-    //                 />
-    //             </div>
-    //         </Col>
-    //     </Row>
-    // </Container>
 }
