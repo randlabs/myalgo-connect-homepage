@@ -1,11 +1,7 @@
 @import "./animation";
 
 .main-wrapper {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-
+   
     .custom-container {
         max-width: 1000px;
     }

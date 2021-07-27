@@ -13,10 +13,10 @@ export default function Community() {
                 <section className="section1">
                     <div className="custom-container">
                         <div className="left">
-                            <h1 className="title">Need some support?  join the community!</h1>
+                            <h1 className="title">Need some support?  Join the community!</h1>
                             <h2 className="subtitle">The best place to discuss and ask questions to the MyAlgo Connect team and the community of developers building on it is the Algorand Discord channel:</h2>
                             <a href="https://discord.com/channels/491256308461207573/817420411502329896" className="button button-black mt-5">
-                                <DiscordIcon fill="white"/>  &nbsp; Join Discord </a>
+                                <DiscordIcon fill="white"/>  &nbsp; Discord </a>
                         </div>
                         <div className="right">
                             <img src="../static/img/connect-icon.svg" alt="" className="logo" />
