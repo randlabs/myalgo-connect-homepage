@@ -1,4 +1,3 @@
-import { Accounts } from "@randlabs/myalgo-connect";
 import React, { Fragment, MouseEvent, ReactElement, useState, useEffect } from "react";
 import { Dropdown, DropdownItem, DropdownMenu, DropdownToggle, FormGroup, Label } from "reactstrap";
 
@@ -24,7 +23,7 @@ export default function SenderDropdown(props: SenderDropdownProps): JSX.Element 
         openDropdown(!isOpen);
     }
 
-    const onSelectSender = (account: Accounts) => {
+    const onSelectSender = (account: any) => {
         setSender(account);
         props.onSelectSender(account.address);
     }

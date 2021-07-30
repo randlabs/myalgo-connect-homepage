@@ -1,11 +1,11 @@
-import React, { useState, FormEvent } from "react";
-import { Button, Col, Container, Form, Label, Nav, NavItem, NavLink, Row, TabContent, TabPane } from "reactstrap";
+import ExecutionEnvironment from '@docusaurus/ExecutionEnvironment';
+import React, { FormEvent, useContext, useState } from "react";
+import { Button, Col, Form, Label, Nav, NavItem, NavLink, Row, TabContent, TabPane } from "reactstrap";
+import PreLoadDataContextComponent, { PreLoadDataContext } from '../context/preLoadedData';
 import Address from "./commons/Address";
 import Amount from "./commons/Amount";
-import SenderDropdown from "./commons/FromDropdown";
 import PrismCode from './commons/Code';
-import algosdk from "algosdk";
-import { connection } from '../utils/connections';
+import SenderDropdown from "./commons/FromDropdown";
 import "./interactive-examples.scss";
 
 const codeV1 = `
@@ -72,8 +72,9 @@ const myAlgoConnect = new MyAlgoConnect();
 const signedTxns = await myAlgoConnect.signTransaction(txnsArray.map(txn => txn.toByte()));
 `;
 
-export default function GroupedPaymentExample(): JSX.Element {
-    const accounts = window.sharedAccounts && Array.isArray(window.sharedAccounts) ? window.sharedAccounts : [];
+function GroupedPaymentExample(): JSX.Element {
+    const preLoadedData = useContext(PreLoadDataContext);
+    const accounts = ExecutionEnvironment.canUseDOM && window.sharedAccounts && Array.isArray(window.sharedAccounts) ? window.sharedAccounts : [];
     const [accountSelected, selectAccount] = useState("");
     const [receiver1, setReceiver1] = useState("");
     const [receiver2, setReceiver2] = useState("");
@@ -100,8 +101,8 @@ export default function GroupedPaymentExample(): JSX.Element {
                 genesisID: "testnet-v1.0",
                 lastRound: 15250878,
             }
-            
-            const txn1 = algosdk.makePaymentTxnWithSuggestedParamsFromObject({
+
+            const txn1 = preLoadedData.algosdk.makePaymentTxnWithSuggestedParamsFromObject({
                 suggestedParams: {
                     ...params,
                     fee: 1000,
@@ -109,10 +110,10 @@ export default function GroupedPaymentExample(): JSX.Element {
                 },
                 from: accountSelected,
                 to: receiver1,
-                amount: algosdk.algosToMicroalgos(amount1),
+                amount: preLoadedData.algosdk.algosToMicroalgos(amount1),
             });
 
-            const txn2 = algosdk.makePaymentTxnWithSuggestedParamsFromObject({
+            const txn2 = preLoadedData.algosdk.makePaymentTxnWithSuggestedParamsFromObject({
                 suggestedParams: {
                     ...params,
                     fee: 1000,
@@ -120,17 +121,17 @@ export default function GroupedPaymentExample(): JSX.Element {
                 },
                 from: accountSelected,
                 to: receiver2,
-                amount: algosdk.algosToMicroalgos(amount2),
+                amount: preLoadedData.algosdk.algosToMicroalgos(amount2),
             });
 
             const txArr = [txn1, txn2];
-            const groupID = algosdk.computeGroupID(txArr);
+            const groupID = preLoadedData.algosdk.computeGroupID(txArr);
 
             for (let i = 0; i < 2; i++) {
                 txArr[i].group = groupID;
             }
 
-            const signedTxns = await connection.signTransaction(txArr.map(txn => txn.toByte()));
+            const signedTxns = await preLoadedData.myAlgoWallet.signTransaction(txArr.map(txn => txn.toByte()));
 
             setResponse(signedTxns);
         }
@@ -194,7 +195,7 @@ export default function GroupedPaymentExample(): JSX.Element {
                             </Button>
                         </Col>
                     </Row>
-                    {accounts.length === 0 && 
+                    {accounts.length === 0 &&
                         <div className="error-connect mt-3"> In order to run this example, you need to execute connect() method. </div>
                     }
                 </TabPane>
@@ -225,3 +226,5 @@ export default function GroupedPaymentExample(): JSX.Element {
         </div>
     )
 }
+
+export default () => <PreLoadDataContextComponent><GroupedPaymentExample /></PreLoadDataContextComponent>;

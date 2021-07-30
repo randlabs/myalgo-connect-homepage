@@ -1,12 +1,12 @@
-import algosdk from "algosdk";
-import React, { FormEvent, useState } from "react";
-import { Button, Col, Form, Label, Nav, NavItem, NavLink, Row, TabContent, TabPane } from "reactstrap";
+import ExecutionEnvironment from '@docusaurus/ExecutionEnvironment';
+import React, { useContext, useState } from "react";
+import { Button, Col, Label, Nav, NavItem, NavLink, Row, TabContent, TabPane } from "reactstrap";
+import PreLoadDataContextComponent, { PreLoadDataContext } from '../context/preLoadedData';
 import Address from "./commons/Address";
 import Amount from "./commons/Amount";
 import PrismCode from './commons/Code';
 import SenderDropdown from "./commons/FromDropdown";
 import Note from "./commons/Note";
-import { algodClient, connection } from '../utils/connections';
 import "./interactive-examples.scss";
 
 const codeV2 =
@@ -54,8 +54,9 @@ byte b32 $REPLACE_FOR_TXID
 &&
 `
 
-export default function SignTealExample(): JSX.Element {
-    const accountslist = window.sharedAccounts && Array.isArray(window.sharedAccounts) ? window.sharedAccounts : [];
+function PaymentWithTealExample(): JSX.Element {
+    const preLoadedData = useContext(PreLoadDataContext);
+    const accountslist = ExecutionEnvironment.canUseDOM && window.sharedAccounts && Array.isArray(window.sharedAccounts) ? window.sharedAccounts : [];
     const [accounts, setAccount] = useState(accountslist);
     const [accountSelected, selectAccount] = useState("");
     const [note, setNote] = useState<Uint8Array | undefined>();
@@ -64,14 +65,13 @@ export default function SignTealExample(): JSX.Element {
     const [response, setResponse] = useState();
     const [activeTab, setActiveTab] = useState('1');
     const [teal, setTeal] = useState("");
-    const [preparedTxn, setTxn] = useState<algosdk.Transaction | null>(null);
+    const [preparedTxn, setTxn] = useState(null);
 
     const toggle = (tab: React.SetStateAction<string>) => {
         if (activeTab !== tab) setActiveTab(tab);
     }
 
     const onPrepareTransaction = (): void => {
-        // event.preventDefault();
         try {
             if (accounts.length === 0 || receiver.length === 0) return;
 
@@ -84,7 +84,7 @@ export default function SignTealExample(): JSX.Element {
                 lastRound: 15250878,
             }
 
-            const txn = algosdk.makePaymentTxnWithSuggestedParamsFromObject({
+            const txn = preLoadedData.algosdk.makePaymentTxnWithSuggestedParamsFromObject({
                 suggestedParams: {
                     ...params,
                     fee: 1000,
@@ -92,11 +92,11 @@ export default function SignTealExample(): JSX.Element {
                 },
                 from: accountSelected,
                 to: receiver, note,
-                amount: algosdk.algosToMicroalgos(amount),
+                amount: preLoadedData.algosdk.algosToMicroalgos(amount),
             });
 
             const rTeal = statelessTeal.replace("$REPLACE_FOR_TXID", `${txn.txID()}`);
-            algodClient.compile(rTeal).do().then(compiledTeal => {
+            preLoadedData.algoClient.compile(rTeal).do().then(compiledTeal => {
                 setTxn(txn);
                 setTeal(compiledTeal.result);
             })
@@ -111,10 +111,10 @@ export default function SignTealExample(): JSX.Element {
         try {
             if (preparedTxn === null || teal.length === 0) return;
 
-            const lsig = algosdk.makeLogicSig(new Uint8Array(Buffer.from(teal, "base64")));
-            connection.signLogicSig(lsig.logic, accountSelected).then(sig => {
+            const lsig = preLoadedData.algosdk.makeLogicSig(new Uint8Array(Buffer.from(teal, "base64")));
+            preLoadedData.myAlgoWallet.signLogicSig(lsig.logic, accountSelected).then(sig => {
                 lsig.sig = sig;
-                const signedTxn = algosdk.signLogicSigTransaction(preparedTxn, lsig);
+                const signedTxn = preLoadedData.algosdk.signLogicSigTransaction(preparedTxn, lsig);
                 setResponse(signedTxn);
                 setTxn(null);
                 setTeal("");
@@ -212,3 +212,5 @@ export default function SignTealExample(): JSX.Element {
         </div>
     )
 }
+
+export default () => <PreLoadDataContextComponent><PaymentWithTealExample /></PreLoadDataContextComponent>;

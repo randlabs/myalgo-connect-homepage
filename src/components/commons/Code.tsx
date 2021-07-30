@@ -1,6 +1,5 @@
 import React, { Component, RefObject } from 'react'
 import Prism from 'prismjs'
-import ReactMarkdown from 'react-markdown';
 import 'prismjs/themes/prism.css';
 
 interface ICodeProps {
