@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useInView } from 'react-intersection-observer';
-import { algodClient } from '../../utils/connections';
+import { PreLoadDataContext } from "../../context/preLoadedData";
 import PrismCode from '../commons/Code';
 
 const code = `
@@ -12,11 +12,12 @@ const response = await algodClient.sendRawTransaction(signedTxn.blob).do();
 `;
 
 export default function SendTransaction(props: any): JSX.Element {
+    const preLoadedData = useContext(PreLoadDataContext);
     const [response, setResponse] = useState("");
     const { ref, inView, entry } = useInView({ threshold: 1, triggerOnce: true });
     const onClickToSend = async (): Promise<void> => {
         try {
-            const res = await algodClient.sendRawTransaction(props.txToSend.blob).do();
+            const res = await preLoadedData.algoClient.sendRawTransaction(props.txToSend.blob).do();
             setResponse(res);
         } catch (err) {
             console.error(err);

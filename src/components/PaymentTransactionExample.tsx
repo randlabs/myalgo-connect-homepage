@@ -1,13 +1,14 @@
-import algosdk from "algosdk";
-import React, { FormEvent, useState } from "react";
+import ExecutionEnvironment from '@docusaurus/ExecutionEnvironment';
+import React, { FormEvent, useContext, useState } from "react";
 import { Button, Col, Form, Label, Nav, NavItem, NavLink, Row, TabContent, TabPane } from "reactstrap";
+import PreLoadDataContextComponent, { PreLoadDataContext } from '../context/preLoadedData';
 import Address from "./commons/Address";
 import Amount from "./commons/Amount";
 import PrismCode from './commons/Code';
 import SenderDropdown from "./commons/FromDropdown";
 import Note from "./commons/Note";
-import { connection } from '../utils/connections';
 import "./interactive-examples.scss";
+
 
 const codeV1 = `
 import algosdk from "algosdk";
@@ -50,8 +51,9 @@ const myAlgoConnect = new MyAlgoConnect();
 const signedTxn = await myAlgoConnect.signTransaction(txn.toByte());
 `;
 
-export default function PaymentTransactionExample(): JSX.Element {
-    const accounts = window.sharedAccounts && Array.isArray(window.sharedAccounts) ? window.sharedAccounts : [];
+function PaymentTransactionExample(): JSX.Element {
+    const preLoadedData = useContext(PreLoadDataContext);
+    const accounts = ExecutionEnvironment.canUseDOM && window.sharedAccounts && Array.isArray(window.sharedAccounts) ? window.sharedAccounts : [];
     const [note, setNote] = useState<Uint8Array | undefined>();
     const [accountSelected, selectAccount] = useState("");
     const [receiver, setReceiver] = useState("");
@@ -75,18 +77,18 @@ export default function PaymentTransactionExample(): JSX.Element {
                 genesisID: "testnet-v1.0",
                 lastRound: 15250878,
             }
-            
-            const txn = algosdk.makePaymentTxnWithSuggestedParamsFromObject({
+
+            const txn = preLoadedData.algosdk.makePaymentTxnWithSuggestedParamsFromObject({
                 suggestedParams: {
                     ...params,
                 },
                 from: accountSelected,
                 to: receiver, note,
-                amount: algosdk.algosToMicroalgos(amount),
+                amount: preLoadedData.algosdk.algosToMicroalgos(amount),
             });
 
-            const signedTxn = await connection.signTransaction(txn.toByte());
-            // const response = await algodClient.sendRawTransaction(signedTxn.blob).do();
+            
+            const signedTxn = await preLoadedData.myAlgoWallet.signTransaction(txn.toByte());
             setResponse(signedTxn);
         }
         catch (err) {
@@ -179,3 +181,5 @@ export default function PaymentTransactionExample(): JSX.Element {
         </div>
     )
 }
+
+export default () => <PreLoadDataContextComponent><PaymentTransactionExample /></PreLoadDataContextComponent>;

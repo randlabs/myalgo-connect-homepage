@@ -1,9 +1,7 @@
-import algosdk from "algosdk";
 import React, { useContext } from "react";
 import { useInView } from 'react-intersection-observer';
 import { AccountsContext } from "../../context/accountsContext";
-import { ParamsContext } from "../../context/paramsContext";
-import { connection } from '../../utils/connections';
+import { PreLoadDataContext } from "../../context/preLoadedData";
 import PrismCode from '../commons/Code';
 
 const code = `
@@ -20,20 +18,18 @@ const signedTxn = await myAlgoConnect.signTransaction(txn.toByte());
 `;
 
 export default function SignTransaction(props: any): JSX.Element {
-    const params = useContext(ParamsContext);
+    const preLoadedData = useContext(PreLoadDataContext);
     const accounts = useContext(AccountsContext);
-
     const account = accounts && accounts.length > 0 ? accounts[0].address : "";
-    const { ref, inView, entry } = useInView({ threshold: 1, triggerOnce: true });
+    const { ref, inView } = useInView({ threshold: 1, triggerOnce: true });
 
     const onClickPaymentTx = async (): Promise<void> => {
-
         try {
-            if (!params || !account) return;
+            if (!preLoadedData.params || !account) return;
 
-            const txn = algosdk.makePaymentTxnWithSuggestedParamsFromObject({
+            const txn = preLoadedData.algosdk.makePaymentTxnWithSuggestedParamsFromObject({
                 suggestedParams: {
-                    ...params,
+                    ...preLoadedData.params,
                     fee: 1000,
                     flatFee: true,
                 },
@@ -42,7 +38,7 @@ export default function SignTransaction(props: any): JSX.Element {
                 amount: 1000,
             });
 
-            const signedTxn = await connection.signTransaction(txn.toByte());
+            const signedTxn = await preLoadedData.myAlgoWallet.signTransaction(txn.toByte());
 
             props.callbackSignedTxn(signedTxn);
         }

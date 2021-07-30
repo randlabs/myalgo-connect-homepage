@@ -1,4 +1,4 @@
-import { isValidAddress } from "algosdk";
+// import { isValidAddress } from "algosdk";
 import React, { Fragment, useState, ChangeEvent } from "react";
 import MaskedInput from "react-text-mask";
 import { FormFeedback, FormGroup, Label } from "reactstrap";
@@ -20,9 +20,10 @@ export default function Address(props: AddressProps): JSX.Element {
     
     const onChangeAddress = (event: ChangeEvent<HTMLInputElement>): void => {
         setAddress(event.target.value);
-    
-        if (!isValidAddress(event.target.value))
-            return setValid(false);
+        
+        //TODO: validate
+        // if (!isValidAddress(event.target.value))
+        //     return setValid(false);
 
         setValid(true)
         props.onChangeAddress(event.target.value);

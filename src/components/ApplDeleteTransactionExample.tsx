@@ -1,10 +1,11 @@
-import algosdk from "algosdk";
-import React, { FormEvent, useState } from "react";
+import ExecutionEnvironment from '@docusaurus/ExecutionEnvironment';
+
+import React, { FormEvent, useContext, useEffect, useState } from "react";
 import { Button, Col, Form, Label, Nav, NavItem, NavLink, Row, TabContent, TabPane } from "reactstrap";
+import PreLoadDataContextComponent, { PreLoadDataContext } from '../context/preLoadedData';
 import AppIndex from "./commons/AppIndex";
 import PrismCode from './commons/Code';
 import SenderDropdown from "./commons/FromDropdown";
-import { connection } from '../utils/connections';
 import "./interactive-examples.scss";
 
 const codeV1 = `
@@ -45,8 +46,9 @@ const myAlgoConnect = new MyAlgoConnect();
 const signedTxn = await myAlgoConnect.signTransaction(txn.toByte());
 `;
 
-export default function ApplCreateTransactionExample(): JSX.Element {
-    const accounts = window.sharedAccounts && Array.isArray(window.sharedAccounts) ? window.sharedAccounts : [];
+function ApplCreateTransactionExample(): JSX.Element {
+    const preLoadedData = useContext(PreLoadDataContext);
+    const accounts = ExecutionEnvironment.canUseDOM && window.sharedAccounts && Array.isArray(window.sharedAccounts) ? window.sharedAccounts : [];
     const [appIndex, setAppIndex] = useState("17140470");
     const [accountSelected, selectAccount] = useState("");
     const [response, setResponse] = useState();
@@ -71,7 +73,7 @@ export default function ApplCreateTransactionExample(): JSX.Element {
                 lastRound: 15250878,
             }
 
-            const txn = algosdk.makeApplicationDeleteTxnFromObject({
+            const txn = preLoadedData.algosdk.makeApplicationDeleteTxnFromObject({
                 suggestedParams: {
                     ...params,
                     fee: 1000,
@@ -81,8 +83,7 @@ export default function ApplCreateTransactionExample(): JSX.Element {
                 appIndex: parseInt(appIndex),
             });
 
-            const signedTxn = await connection.signTransaction(txn.toByte());
-            // const response = await algodClient.sendRawTransaction(signedTxn.blob).do();
+            const signedTxn = await preLoadedData.myAlgoWallet.signTransaction(txn.toByte());
 
             setResponse(signedTxn);
         }
@@ -174,3 +175,5 @@ export default function ApplCreateTransactionExample(): JSX.Element {
         </div>
     )
 }
+
+export default () => <PreLoadDataContextComponent><ApplCreateTransactionExample /></PreLoadDataContextComponent>;
