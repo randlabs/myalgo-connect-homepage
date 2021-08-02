@@ -1,4 +1,5 @@
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
+import useBaseUrl from "@docusaurus/useBaseUrl"
 import Layout from '@theme/Layout';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import clsx from 'clsx';
@@ -98,7 +99,7 @@ export default function Home() {
               </div>
             </div>
             <div className="right">
-              <img src="../static/img/myalgo-connect-tour.gif" className="gif" />
+              <img src={useBaseUrl("/img/myalgo-connect-tour.gif")} className="gif" />
             </div>
           </div>
           <h1 className="message">
@@ -115,18 +116,18 @@ export default function Home() {
             <div ref={ref}>
               <div className={clsx("feature-section")}>
                 <div className={clsx("left", "from-left", selectIcon === 0 && slideIn ? "appear" : "", selectIcon !== 0 && slideOut ? "disappear" : "", shouldDisplay === 0 ? "" : "hidden")}>
-                  <img src="../static/img/hardware.svg" alt="" />
+                  <img src={useBaseUrl("/img/hardware.svg")} alt="" />
                 </div>
                 <div className={clsx("left", "from-left", selectIcon === 1 && slideIn ? "appear" : "", selectIcon !== 1 && slideOut ? "disappear" : "", shouldDisplay === 1 ? "" : "hidden")}>
-                  <img src="../static/img/extension.svg" alt="" />
+                  <img src={useBaseUrl("/img/extension.svg")} alt="" />
                 </div>
 
                 <div className={clsx("left", "from-left", selectIcon === 2 && slideIn ? "appear" : "", selectIcon !== 2 && slideOut ? "disappear" : "", shouldDisplay === 2 ? "" : "hidden")}>
-                  <img src="../static/img/feature.svg" alt="" />
+                  <img src={useBaseUrl("/img/feature.svg")} alt="" />
                 </div>
 
                 <div className={clsx("left", "from-left", selectIcon === 3 && slideIn ? "appear" : "", selectIcon !== 3 && slideOut ? "disappear" : "", shouldDisplay === 3 ? "" : "hidden")}>
-                  <img src="../static/img/warning.svg" alt="" />
+                  <img src={useBaseUrl("/img/warning.svg")} alt="" />
                 </div>
 
                 <div className="right">

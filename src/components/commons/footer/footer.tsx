@@ -1,3 +1,4 @@
+import useBaseUrl from "@docusaurus/useBaseUrl"
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'prismjs/themes/prism.css';
 import React from 'react';
@@ -8,14 +9,14 @@ export default function Footer() {
       <div className="custom-container">
         <div className="row1">
           <div className="left">
-            <img src="../static/img/connect-icon.svg" alt="" className="logo" />
+            <img src={useBaseUrl("/img/connect-icon.svg")} alt="" className="logo" />
           </div>
           <div className="right">
             <div className="icons">
               <div className="aligned">
-                <a href="https://github.com/randlabs/myalgo-connect/releases"><img src="../static/img/github-icon.svg" alt="" className="scale-on-hover" /></a>
-                <a href="https://twitter.com/myalgo_"><img src="../static/img/twitter-icon.svg" alt="" className="scale-on-hover" /></a>
-                <a href="https://medium.com/randlabs"><img src="../static/img/mm-icon.svg" alt="" className="scale-on-hover medium" /></a>
+                <a href="https://github.com/randlabs/myalgo-connect/releases"><img src={useBaseUrl("/img/github-icon.svg")} alt="" className="scale-on-hover" /></a>
+                <a href="https://twitter.com/myalgo_"><img src={useBaseUrl("/img/twitter-icon.svg")} alt="" className="scale-on-hover" /></a>
+                <a href="https://medium.com/randlabs"><img src={useBaseUrl("/img/mm-icon.svg")} alt="" className="scale-on-hover medium" /></a>
                 <div className="contact-us scale-on-hover">
                   <a href="https://randlabs.io/contact">
                     Contact Us &nbsp; &gt;

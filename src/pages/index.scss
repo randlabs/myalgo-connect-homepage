@@ -404,7 +404,7 @@
 }
 
 .header-github-link:before {
-    background-image: url(../../static/img/github-icon.png);
+    background-image: url(/img/github-icon.png);
     content: "";
     display: flex;
     height: 33px;
@@ -413,6 +413,6 @@
     background-repeat: no-repeat;
 
     @media (max-width: 1000px) {
-        background-image: url(../../static/img/github-icon.svg);
+        background-image: url(/img/github-icon.svg);
     }
 }

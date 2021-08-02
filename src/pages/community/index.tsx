@@ -1,4 +1,5 @@
 import Layout from '@theme/Layout';
+import useBaseUrl from "@docusaurus/useBaseUrl"
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'prismjs/themes/prism.css';
 import React from 'react';
@@ -22,7 +23,7 @@ export default function Community() {
                             </a>
                         </div>
                         <div className="right">
-                            <img src="../static/img/connect-icon.svg" alt="" className="logo" />
+                            <img src={useBaseUrl("/img/connect-icon.svg")} alt="" className="logo" />
                         </div>
                     </div>
                 </section>
