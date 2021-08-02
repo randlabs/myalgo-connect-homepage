@@ -16,7 +16,7 @@ module.exports = {
   organizationName: 'Rand Labs', // Usually your GitHub org/user name.
   projectName: 'MyAlgo Connect', // Usually your repo name.
   themeConfig: {
-    hideableSidebar: true,
+    hideableSidebar: false,
     colorMode: {
       // "light" | "dark"
       defaultMode: 'light',
