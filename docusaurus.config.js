@@ -7,7 +7,7 @@ const bufferPlugin = require('./src/docusaurus-plugin/buffer/index');
 /** @type {import('@docusaurus/types').DocusaurusConfig} */
 module.exports = {
   title: 'MyAlgo Connect',
-  tagline: 'MyAlgo Connect Documentation',
+  tagline: 'MyAlgo Connect’s Developer Documentation. This documentation explains how to connect dapps to the Algorand blockchain through MyAlgo Connect.',
   url: 'https://connect.myalgo.com',
   baseUrl: '/',
   onBrokenLinks: 'throw',
@@ -54,6 +54,7 @@ module.exports = {
         },
       ],
     },
+    image: 'img/connect-icon.svg',
     // footer: {
     //   style: 'dark',
     //   links: [
@@ -124,6 +125,5 @@ module.exports = {
     algosdkPlugin,
     bufferPlugin,
     'docusaurus-plugin-sass',
-    
   ]
 };
