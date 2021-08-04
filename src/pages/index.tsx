@@ -16,7 +16,6 @@ import PreLoadDataContextComponent, { PreLoadDataContext } from '../context/preL
 import { sleep } from '../utils/algorand';
 import './index.scss';
 
-
 export default function Home() {
   const preLoadedData = useContext(PreLoadDataContext);
   const { siteConfig } = useDocusaurusContext();
@@ -82,8 +81,9 @@ export default function Home() {
 
   return (
     <Layout
-      title={`${siteConfig.title}`}
+      title="MyAlgo Connect Documentation"
       description={`${siteConfig.tagline}`}>
+
       <div className="homepage">
         <section className="section1">
           <div className="custom-container">
