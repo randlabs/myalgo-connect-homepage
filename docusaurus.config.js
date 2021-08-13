@@ -16,6 +16,9 @@ module.exports = {
   organizationName: 'Rand Labs', // Usually your GitHub org/user name.
   projectName: 'MyAlgo Connect', // Usually your repo name.
   themeConfig: {
+    googleAnalytics: {
+      trackingID: 'UA-131115436-8',
+    },
     hideableSidebar: false,
     colorMode: {
       // "light" | "dark"
@@ -124,6 +127,6 @@ module.exports = {
   plugins: [
     algosdkPlugin,
     bufferPlugin,
-    'docusaurus-plugin-sass',
+    'docusaurus-plugin-sass'
   ]
 };
