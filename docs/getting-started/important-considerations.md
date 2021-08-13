@@ -23,4 +23,8 @@ Unfortunately, Ledger Nano has hardware limitations that limit some transaction 
 | appForeignAssets |    1     |      |
 | appForeignApps   |    1     |      |
 | appArgs          |    2     |   32 bytes max length per argument   |
+| appApprovalProgram | 128 bytes for both devices |
+| appClearProgram | 32 bytes for both devices |
+| assetURL         |    32 bytes for both devices |
 
+Also, no devices have support for signing stateless teal. This operation could only be done by mnemonic accounts.
