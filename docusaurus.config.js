@@ -19,12 +19,12 @@ module.exports = {
     metadatas: [
       {
         property: 'og:image',
-        content: 'https://connect.myalgo.com/img/connect-icon.svg',
+        content: 'https://connect.myalgo.com/img/connect-icon.png',
       },
       {name: 'twitter:card', content: 'summary_large_image'},
       {
         name: 'twitter:image',
-        content: 'https://connect.myalgo.com/img/connect-icon.svg',
+        content: 'https://connect.myalgo.com/img/connect-icon.png',
       },
       {name: 'twitter:site', content: '@randlabs'},
     ],
