@@ -16,6 +16,18 @@ module.exports = {
   organizationName: 'Rand Labs', // Usually your GitHub org/user name.
   projectName: 'MyAlgo Connect', // Usually your repo name.
   themeConfig: {
+    metadatas: [
+      {
+        property: 'og:image',
+        content: 'https://connect.myalgo.com/img/connect-icon.svg',
+      },
+      {name: 'twitter:card', content: 'summary_large_image'},
+      {
+        name: 'twitter:image',
+        content: 'https://connect.myalgo.com/img/connect-icon.svg',
+      },
+      {name: 'twitter:site', content: '@randlabs'},
+    ],
     googleAnalytics: {
       trackingID: 'UA-131115436-8',
     },
