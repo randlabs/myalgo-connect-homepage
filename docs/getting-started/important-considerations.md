@@ -26,5 +26,6 @@ Unfortunately, Ledger Nano has hardware limitations that limit some transaction 
 | appApprovalProgram | 128 bytes for both devices |
 | appClearProgram | 32 bytes for both devices |
 | assetURL         |    32 bytes for both devices |
+| extraPages    |   | Field not supported  |
 
 Also, no devices have support for signing stateless teal. This operation could only be done by mnemonic accounts.
