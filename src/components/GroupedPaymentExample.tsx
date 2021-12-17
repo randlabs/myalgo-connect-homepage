@@ -31,9 +31,9 @@ const txn2: any = {
     amount: amount
 };
 
-const txnsToGroup = [ txn1, txn2 ];
+const txnsArray = [ txn1, txn2 ];
 const groupID = algosdk.computeGroupID(txnsArray)
-for (let i = 0; i < 2; i++) txnsToGroup[i].group = groupID;
+for (let i = 0; i < 2; i++) txnsArray[i].group = groupID;
 
 const myAlgoConnect = new MyAlgoConnect();
 const signedTxns = await myAlgoConnect.signTransaction(txnsArray);
@@ -64,9 +64,9 @@ const txn2 = algosdk.makePaymentTxnWithSuggestedParamsFromObject({
     amount: amount2
 });
 
-const txnsToGroup = [ txn1, txn2 ];
+const txnsArray = [ txn1, txn2 ];
 const groupID = algosdk.computeGroupID(txnsArray)
-for (let i = 0; i < 2; i++) txnsToGroup[i].group = groupID;
+for (let i = 0; i < 2; i++) txnsArray[i].group = groupID;
 
 const myAlgoConnect = new MyAlgoConnect();
 const signedTxns = await myAlgoConnect.signTransaction(txnsArray.map(txn => txn.toByte()));
