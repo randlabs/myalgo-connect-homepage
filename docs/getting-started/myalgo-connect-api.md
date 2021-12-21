@@ -24,7 +24,9 @@ export interface Accounts {
 }
 
 export interface ConnectionSettings {
-  shouldSelectOneAccount: boolean; 
+  shouldSelectOneAccount?: boolean; 
+  openManager?: boolean;
+  isLedgerSupported?: boolean;
 }
 
 connect(settings?: ConnectionSettings): Promise<Accounts[]>;
@@ -32,8 +34,13 @@ connect(settings?: ConnectionSettings): Promise<Accounts[]>;
 
 #### Params
 
-Object `settings` with the following field(s):
-`shouldSelectOneAccount`: Users are allowed to select just one account. Default is false.
+Object `settings` may have the following fields:
+
+- `shouldSelectOneAccount`: Users are allowed to select just one account. Default is false.
+
+- `openManager`: Users are sent to **Manage Account** to allow it to change the current wallet(s) selected. Default is false.
+
+- `isLedgerSupported`: Disable Hardware wallet(s) in **Manage Account** to be selected. Default is true.
 
 #### Response
 
@@ -68,14 +75,21 @@ export interface SignedTx {
    txID: TxHash;
    blob: Uint8Array;
 }
- 
-signTransaction(transaction: AlgorandTxn | EncodedTransaction | AlgorandTxn[] | EncodedTransaction[]): Promise<SignedTx | SignerdTx[]>;
+
+export interface SignTxSettings {
+  shouldSelectOneAccount?: boolean; 
+}
+
+signTransaction(transaction: AlgorandTxn | EncodedTransaction | AlgorandTxn[] | EncodedTransaction[], settings?: SignTxSettings ): Promise<SignedTx | SignerdTx[]>;
 ```
 
 #### Params
 
-`transaction`: an array or a single transaction of the following types: **AlgorandTxn**, **EncodedTransaction**.
+- `transaction`: an array or a single transaction of the following types: **AlgorandTxn**, **EncodedTransaction**.
 
+Object `settings` has the following field:
+
+- `isLedgerSupported`: User will be notified that the current operation is not supported to sign by Hardware Ledger. Default is true.
 
 #### Response
 

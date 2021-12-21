@@ -87,7 +87,7 @@
 
 .code-connect-example {
     height: 100%;
-    max-height: 159px !important;
+    max-height: 314px !important;
 }
 
 .nav-link {
@@ -201,3 +201,30 @@
 .response {
     font-size: 0.85rem !important;
  }
+
+
+.unlock-buttons {
+	gap: 15px;
+	display: flex;
+	justify-self: center;
+	align-items: center;
+	flex-direction: column;
+    margin-left: 10px;
+
+	.param {
+		display: flex;
+		justify-self: center;
+		align-items: center;
+	}
+
+	input {
+		margin-left: 15px;
+		width: 25px !important;
+		height: 25px !important;
+	}
+
+	button {
+		width: 240px;
+		margin-bottom: 0.5rem !important;
+	}
+}
