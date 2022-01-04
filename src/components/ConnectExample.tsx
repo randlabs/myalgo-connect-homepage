@@ -7,11 +7,10 @@ import PrismCode from './commons/Code';
 const code = `
 import MyAlgoConnect from '@randlabs/myalgo-connect';
 
-const myAlgoConnect = new MyAlgoConnect();
+const myAlgoConnect = new MyAlgoConnect({ disableLedgerNano: false });
 
 const settings = {
     shouldSelectOneAccount: false,
-    isLedgerSupported: true,
     openManager: false
 };
 
@@ -21,7 +20,6 @@ const accounts = await myAlgoConnect.connect(settings);
 function ConnectExample(): JSX.Element {
     const preLoadedData = useContext(PreLoadDataContext);
     const [accounts, setAccounts] = useState<[]>([]);
-    const [isLedgerSupported, setIsLedgerSupported] = useState(true);
     const [shouldSelectOneAccount, setShouldSelectOneAccount] = useState(false);
     const [openManager, setOpenManager] = useState(false);
 
@@ -29,7 +27,7 @@ function ConnectExample(): JSX.Element {
         e.preventDefault();
         try {
             if (ExecutionEnvironment.canUseDOM) {
-                const settings = { openManager, isLedgerSupported, shouldSelectOneAccount }
+                const settings = { openManager, shouldSelectOneAccount }
                 const sharedAccounts = await preLoadedData.myAlgoWallet.connect(settings);
                 setAccounts(sharedAccounts);
                 window.sharedAccounts = sharedAccounts;
@@ -48,13 +46,6 @@ function ConnectExample(): JSX.Element {
         <div>
             <h5 className="mt-4 title">Params</h5>
             <Row className="mb-4 unlock-buttons">
-                <div className={"param"}>
-                    <div>isLedgerSupported</div>
-                    <input
-                        type={"checkbox"}
-                        checked={isLedgerSupported}
-                        onClick={() => setIsLedgerSupported(!isLedgerSupported)} />
-                </div>
                 <div className={"param"}>
                     <div>shouldSelectOneAccount</div>
                     <input

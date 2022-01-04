@@ -1,6 +1,6 @@
 import ExecutionEnvironment from '@docusaurus/ExecutionEnvironment';
 
-import React, { FormEvent, useContext, useState } from "react";
+import React, { FormEvent, useContext, useEffect, useState } from "react";
 import { Button, Col, Form, Label, Nav, NavItem, NavLink, Row, TabContent, TabPane } from "reactstrap";
 import PreLoadDataContextComponent, { PreLoadDataContext } from '../context/preLoadedData';
 import PrismCode from './commons/Code';

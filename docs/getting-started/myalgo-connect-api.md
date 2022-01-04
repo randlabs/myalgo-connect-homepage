@@ -8,12 +8,11 @@ MyAlgo Connect offers 3 methods, summarized here.
 
 ## connect()
 
-Request the user to give access to the dapp and which account(s) to share (only the public data). 
-In order to request a signature from the user or have the user approve a transaction, one must be able to access the user's wallet address. 
+Request the user to give access to the dapp and which account(s) to share (only the public data).
+In order to request a signature from the user or have the user approve a transaction, one must be able to access the user's wallet address.
 Connect method allows the dapp to know the list of addresses allowed by the user for future signatures.
 
 The Connect method is agnostic for all networks.
-
 
 #### Fingerprint
 
@@ -26,7 +25,6 @@ export interface Accounts {
 export interface ConnectionSettings {
   shouldSelectOneAccount?: boolean; 
   openManager?: boolean;
-  isLedgerSupported?: boolean;
 }
 
 connect(settings?: ConnectionSettings): Promise<Accounts[]>;
@@ -39,8 +37,6 @@ Object `settings` may have the following fields:
 - `shouldSelectOneAccount`: Users are allowed to select just one account. Default is false.
 
 - `openManager`: Users are sent to **Manage Account** to allow it to change the current wallet(s) selected. Default is false.
-
-- `isLedgerSupported`: Disable Hardware wallet(s) in **Manage Account** to be selected. Default is true.
 
 #### Response
 
@@ -64,7 +60,7 @@ Transactions will be validated against our own set of validations and then for t
 
 #### Fingerprint
 
-```jsx 
+```jsx
 export type Address = string;
 export type Base64 = string;
 export type TxHash = string;
@@ -89,11 +85,11 @@ signTransaction(transaction: AlgorandTxn | EncodedTransaction | AlgorandTxn[] | 
 
 Object `settings` has the following field:
 
-- `isLedgerSupported`: User will be notified that the current operation is not supported to sign by Hardware Ledger. Default is true.
+- `disableLedgerNano`: User will be notified that the current operation is not supported to sign by Hardware Ledger. Default is true.
 
 #### Response
 
-Calling signTransaction with an array of transactions will return an array of a SignedTx object. 
+Calling signTransaction with an array of transactions will return an array of a SignedTx object.
 
 ```json
 [
@@ -137,9 +133,9 @@ Otherwise, it will return a SignedTx object.
 
 #### Considerations
 
-* Transactions that are sent to sign must have the same network. Otherwise, they will be rejected.
-* Different addresses are allowed to be specified as a sender (“from”) in transaction(s), however, the address(es) should be a subset of the accounts shared by the user previously selected in the connect method.
-* Rekey transactions will be signed by the corresponding wallet in case it belongs to the set of wallet shared by the user, this process is automatic and you don’t need to do anything in particular.
+- Transactions that are sent to sign must have the same network. Otherwise, they will be rejected.
+- Different addresses are allowed to be specified as a sender (“from”) in transaction(s), however, the address(es) should be a subset of the accounts shared by the user previously selected in the connect method.
+- Rekey transactions will be signed by the corresponding wallet in case it belongs to the set of wallet shared by the user, this process is automatic and you don’t need to do anything in particular.
 
 ## signLogicSig()
 
@@ -155,12 +151,12 @@ signLogicSig(logic: Uint8Array | Base64, address: Address): Promise<Uint8Array>;
 ```
 
 #### Params
+
 `Logic`:  TEAL program to be signed by the user.
 
 `Address`: Signer’s Address.
 
 #### Response
-
 
 ```json
 // Uint8Array
@@ -174,4 +170,3 @@ signLogicSig(logic: Uint8Array | Base64, address: Address): Promise<Uint8Array>;
   "63": 14
 }
 ```
-
