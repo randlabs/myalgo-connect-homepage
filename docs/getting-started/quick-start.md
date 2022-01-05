@@ -14,6 +14,7 @@ To integrate MyAlgo Connect to your webapp, first you need to integrate the MyAl
 ```jsx
 npm install @randlabs/myalgo-connect
 ```
+
 **Minified version** can be found in our **[Github Repository](https://github.com/randlabs/myalgo-connect/releases)**.
 
 ### Get user’s wallet (only public data)
