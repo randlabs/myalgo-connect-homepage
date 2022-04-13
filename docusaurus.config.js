@@ -16,7 +16,7 @@ module.exports = {
   organizationName: 'Rand Labs', // Usually your GitHub org/user name.
   projectName: 'MyAlgo Connect', // Usually your repo name.
   themeConfig: {
-    metadatas: [
+    metadata: [
       {
         property: 'og:image',
         content: 'https://connect.myalgo.com/img/connect-icon.png',
@@ -28,9 +28,6 @@ module.exports = {
       },
       {name: 'twitter:site', content: '@randlabs'},
     ],
-    googleAnalytics: {
-      trackingID: 'UA-131115436-8',
-    },
     hideableSidebar: false,
     colorMode: {
       // "light" | "dark"
@@ -128,6 +125,9 @@ module.exports = {
           sidebarPath: require.resolve('./sidebars.js'),
           // Please change this to your repo.
           editUrl: 'https://github.com/randlabs/myalgo-connect-homepage/edit/master',
+        },
+        googleAnalytics: {
+          trackingID: 'UA-131115436-8',
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
