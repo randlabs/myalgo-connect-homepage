@@ -22,7 +22,7 @@ const txn: any = {
     type: "pay",
     from: sender,
     to: receiver,
-    amount: amount
+    amount: amount,
     note: note
 };
 
@@ -43,7 +43,7 @@ const txn = algosdk.makePaymentTxnWithSuggestedParamsFromObject({
     },
     from: sender,
     to: receiver, 
-    amount: amount
+    amount: amount,
     note: note
 });
 
