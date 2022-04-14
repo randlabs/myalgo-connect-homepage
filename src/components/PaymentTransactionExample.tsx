@@ -120,7 +120,7 @@ function PaymentTransactionExample(): JSX.Element {
                     <Row className="mt-3">
                         <Col xs="12" lg="6" className="mt-2">
                             <Form id="payment-tx" onSubmit={onSubmitPaymentTx}>
-                                <SenderDropdown onSelectSender={selectAccount} accounts={accounts} />
+                                <SenderDropdown onSelectAccount={selectAccount} accounts={accounts} />
                                 <Address label="To" onChangeAddress={setReceiver} />
                                 <Amount amount={amount} onChangeAmount={setAmount} />
                                 <Note onChangeNote={setNote} />

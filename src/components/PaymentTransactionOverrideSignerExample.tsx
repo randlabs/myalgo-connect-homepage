@@ -1,67 +1,72 @@
 import ExecutionEnvironment from '@docusaurus/ExecutionEnvironment';
-
 import React, { FormEvent, useContext, useState } from "react";
 import { Button, Col, Form, Label, Nav, NavItem, NavLink, Row, TabContent, TabPane } from "reactstrap";
 import PreLoadDataContextComponent, { PreLoadDataContext } from '../context/preLoadedData';
 import Address from "./commons/Address";
 import Amount from "./commons/Amount";
-import AssetIndex from "./commons/AssetId";
 import PrismCode from './commons/Code';
 import AccountDropdown from "./commons/FromDropdown";
 import Note from "./commons/Note";
+import { SignTransactionOptions } from "@randlabs/myalgo-connect";
 import "./interactive-examples.scss";
 
-const algoSdkCode = `
+const codeV1 = `
 import algosdk from "algosdk";
 import MyAlgoConnect from '@randlabs/myalgo-connect';
  
 const algodClient = new algosdk.Algodv2("",'https://api.testnet.algoexplorer.io', '');
 const params = await algodClient.getTransactionParams().do();
 
-const txn = algosdk.makeAssetTransferTxnWithSuggestedParamsFromObject({
+const txn: any = {
+    ...params,
+    type: "pay",
+    from: sender,
+    to: receiver,
+    amount: amount,
+    note: note
+};
+
+const signOptions: SignTransactionOptions = {
+    overrideSigner: overrideAccount
+};
+
+const myAlgoConnect = new MyAlgoConnect();
+const signedTxn = await myAlgoConnect.signTransaction(txn, signOptions);
+`;
+
+const codeV2 = `
+import algosdk from "algosdk";
+import MyAlgoConnect from '@randlabs/myalgo-connect';
+
+const algodClient = new algosdk.Algodv2("",'https://api.testnet.algoexplorer.io', '');
+const params = await algodClient.getTransactionParams().do();
+
+const txn = algosdk.makePaymentTxnWithSuggestedParamsFromObject({
     suggestedParams: {
         ...params,
     },
     from: sender,
-    to: receiver,
-    assetIndex: 12400859,
+    to: receiver, 
     amount: amount,
     note: note
 });
+
+const signOptions: SignTransactionOptions = {
+    overrideSigner: overrideAccount
+};
 
 const myAlgoConnect = new MyAlgoConnect();
 const signedTxn = await myAlgoConnect.signTransaction(txn.toByte());
 `;
 
-const anotherAlternativeCode = `
-import algosdk from "algosdk";
-import MyAlgoConnect from '@randlabs/myalgo-connect';
- 
-const algodClient = new algosdk.Algodv2("",'https://api.testnet.algoexplorer.io', '');
-const params = await algodClient.getTransactionParams().do();
-
-const txn = {
-    ...params,
-    type: 'axfer',
-    from: sender,
-    to: receiver,
-    assetIndex: 12400859,
-    amount: amount,
-    note: note
-};
-
-const myAlgoConnect = new MyAlgoConnect();
-const signedTxn = await myAlgoConnect.signTransaction(txn);
-`;
-
-function ASATransactionExample(): JSX.Element {
+function PaymentTransactionOverrideSignerExample(): JSX.Element {
     const preLoadedData = useContext(PreLoadDataContext);
     const accounts = ExecutionEnvironment.canUseDOM && window.sharedAccounts && Array.isArray(window.sharedAccounts) ? window.sharedAccounts : [];
-    const [accountSelected, selectAccount] = useState("");
     const [note, setNote] = useState<Uint8Array | undefined>();
+    const [accountSelected, selectAccount] = useState("");
+    const [sender, setSender] = useState("");
     const [receiver, setReceiver] = useState("");
     const [amount, setAmount] = useState(0);
-    const [assetIndex, setAssetIndex] = useState(12400859);
     const [response, setResponse] = useState();
     const [activeTab, setActiveTab] = useState('1');
 
@@ -69,12 +74,10 @@ function ASATransactionExample(): JSX.Element {
         if (activeTab !== tab) setActiveTab(tab);
     }
 
-    const onSubmitAsaTransferTx = async (event: FormEvent<HTMLFormElement>): Promise<void> => {
+    const onSubmitPaymentTx = async (event: FormEvent<HTMLFormElement>): Promise<void> => {
         event.preventDefault();
 
         try {
-            if (accounts.length === 0 || receiver.length === 0) return;
-
             const params = {
                 fee: 1000,
                 firstRound: 15249878,
@@ -84,20 +87,20 @@ function ASATransactionExample(): JSX.Element {
                 lastRound: 15250878,
             }
 
-            const txn = preLoadedData.algosdk.makeAssetTransferTxnWithSuggestedParamsFromObject({
+            const txn = preLoadedData.algosdk.makePaymentTxnWithSuggestedParamsFromObject({
                 suggestedParams: {
                     ...params,
-                    fee: 1000,
-                    flatFee: true,
                 },
-                from: accountSelected,
+                from: sender,
                 to: receiver, note,
-                amount: preLoadedData.algosdk.algosToMicroalgos(amount) * 100,
-                assetIndex: assetIndex
+                amount: preLoadedData.algosdk.algosToMicroalgos(amount),
             });
 
-            const signedTxn = await preLoadedData.myAlgoWallet.signTransaction(txn.toByte());
+            const signOptions: SignTransactionOptions = {
+                overrideSigner: accountSelected
+            };
 
+            const signedTxn = await preLoadedData.myAlgoWallet.signTransaction(txn.toByte(), signOptions);
             setResponse(signedTxn);
         }
         catch (err) {
@@ -128,13 +131,13 @@ function ASATransactionExample(): JSX.Element {
                 <TabPane tabId="1">
                     <Row className="mt-3">
                         <Col xs="12" lg="6" className="mt-2">
-                            <Form id="payment-tx" onSubmit={onSubmitAsaTransferTx}>
-                                <AccountDropdown onSelectAccount={selectAccount} accounts={accounts} />
+                            <Form id="payment-tx" onSubmit={onSubmitPaymentTx}>
+                                <AccountDropdown title="Override signer" onSelectAccount={selectAccount} accounts={accounts} />
+                                <Address label="From" onChangeAddress={setSender} />
                                 <Address label="To" onChangeAddress={setReceiver} />
-                                <Amount amount={amount} decimals={8} onChangeAmount={setAmount} />
-                                <AssetIndex assetIndex={assetIndex} disabled={true} onChangeAssetIndex={setAssetIndex} />
+                                <Amount amount={amount} onChangeAmount={setAmount} />
                                 <Note onChangeNote={setNote} />
-                                <Button color="primary" block type="submit" className="mt-2" disabled={accounts.length === 0}>
+                                <Button color="primary" className="mt-2" type="submit" disabled={accountSelected.length === 0}>
                                     Submit
                                 </Button>
                             </Form>
@@ -143,7 +146,7 @@ function ASATransactionExample(): JSX.Element {
                             <Label className="tx-label">
                                 signTransaction() Response
                             </Label>
-                            <div className="response-base txn-asa-transfer-response">
+                            <div className="txn-payment-example-response">
                                 <PrismCode
                                     code={response ? JSON.stringify(response, null, 1) : ""}
                                     language="js"
@@ -160,19 +163,19 @@ function ASATransactionExample(): JSX.Element {
                             </Button>
                         </Col>
                     </Row>
-                    {accounts.length === 0 && 
+                    {accountSelected.length === 0 && 
                         <div className="error-connect mt-3"> In order to run this example, you need to execute connect() method. </div>
                     }
                 </TabPane>
                 <TabPane tabId="2">
-                    <div className="mt-4"> The following codes allow you to create and sent to MyAlgo Connect a asset payment transaction to be sign by the user. There are two alternatives to create it. Pick the one you prefere.</div>
+                    <div className="mt-4"> The following codes allow you to create and sent to MyAlgo Connect a payment transaction to be sign by the user. There are two alternatives to create it. Pick the one you prefere.</div>
                     <Row className="mt-3">
                         <Col>
                             <Label className="tx-label">
                                 Using Algosdk (Recommended)
                             </Label>
                             <PrismCode
-                                code={algoSdkCode}
+                                code={codeV2}
                                 language="js"
                             />
                         </Col>
@@ -181,7 +184,7 @@ function ASATransactionExample(): JSX.Element {
                                 Another alternative
                             </Label>
                             <PrismCode
-                                code={anotherAlternativeCode}
+                                code={codeV1}
                                 language="js"
                             />
                         </Col>
@@ -192,4 +195,4 @@ function ASATransactionExample(): JSX.Element {
     )
 }
 
-export default () => <PreLoadDataContextComponent><ASATransactionExample /></PreLoadDataContextComponent>;
+export default () => <PreLoadDataContextComponent><PaymentTransactionOverrideSignerExample /></PreLoadDataContextComponent>;

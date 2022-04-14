@@ -5,7 +5,7 @@ import { Button, Col, Form, Label, Nav, NavItem, NavLink, Row, TabContent, TabPa
 import PreLoadDataContextComponent, { PreLoadDataContext } from '../context/preLoadedData';
 import AppIndex from "./commons/AppIndex";
 import PrismCode from './commons/Code';
-import SenderDropdown from "./commons/FromDropdown";
+import AccountDropdown from "./commons/FromDropdown";
 import "./interactive-examples.scss";
 
 const codeV1 = `
@@ -116,7 +116,7 @@ function ApplCreateTransactionExample(): JSX.Element {
                     <Row className="mt-3">
                         <Col xs="12" lg="6" className="mt-2">
                             <Form id="payment-tx" onSubmit={onSubmitDeleteApplTx}>
-                                <SenderDropdown onSelectSender={selectAccount} accounts={accounts} />
+                                <AccountDropdown onSelectAccount={selectAccount} accounts={accounts} />
                                 <AppIndex onChangeAppIndex={setAppIndex} />
                                 <Button color="primary" block type="submit" className="mt-2" disabled={accounts.length === 0}>
                                     Submit

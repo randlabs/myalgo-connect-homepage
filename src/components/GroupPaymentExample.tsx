@@ -6,7 +6,7 @@ import PreLoadDataContextComponent, { PreLoadDataContext } from '../context/preL
 import Address from "./commons/Address";
 import Amount from "./commons/Amount";
 import PrismCode from './commons/Code';
-import SenderDropdown from "./commons/FromDropdown";
+import AccountDropdown from "./commons/FromDropdown";
 import "./interactive-examples.scss";
 
 const codeV1 = `
@@ -164,7 +164,7 @@ function GroupPaymentExample(): JSX.Element {
                     <Row className="mt-3">
                         <Col xs="12" lg="6" className="mt-2">
                             <Form id="payment-tx" onSubmit={onSubmitGroupTxns}>
-                                <SenderDropdown onSelectSender={selectAccount} accounts={accounts} />
+                                <AccountDropdown onSelectAccount={selectAccount} accounts={accounts} />
                                 <Address label="To for Transaction 1" onChangeAddress={setReceiver1} />
                                 <Amount amount={amount1} label="Amount for Transaction 1" onChangeAmount={setAmount1} />
                                 <Address label="To for Transaction 2" onChangeAddress={setReceiver2} />
