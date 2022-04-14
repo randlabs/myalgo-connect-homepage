@@ -4,7 +4,29 @@ sidebar_position: 2
 
 # MyAlgo Connect API
 
-MyAlgo Connect offers 3 methods, summarized here.
+## constructor
+
+Create an instance of `MyAlgoConnect`.
+
+#### Signature and types
+
+```ts
+export interface Options {
+	timeout?: number;
+	bridgeUrl?: string;
+	disableLedgerNano?: boolean;
+}
+
+constructor(options?: Options);
+```
+
+#### Params
+
+Object `options` may have the following fields:
+
+ - `timeout`: Number of msec to wait the popup response, default value: 1600000 msec.
+ - `bridgeUrl`: Override `wallet.myalgo.com` default url
+ - `disableLedgerNano`: Disable ledger nano accounts and return only mnemonic accounts.
 
 ## connect()
 
@@ -12,9 +34,9 @@ Request the user to give access to the dapp and which account(s) to share (only 
 In order to request a signature from the user or have the user approve a transaction, one must be able to access the user's wallet address.
 Connect method allows the dapp to know the list of addresses allowed by the user for future signatures.
 
-The Connect method is agnostic for all networks.
+The Connect method is agnostic to all networks.
 
-#### Fingerprint
+#### Signature and types
 
 ```jsx
 export interface Accounts {
@@ -40,7 +62,7 @@ Object `settings` may have the following fields:
 
 #### Response
 
-Will return an array of an Account object, which contains the public wallet(s) data selected by the user in the “Manage your account” section.
+Returns an array of Account objects, which contains the public wallet(s) data selected by the user in the “Manage your account” section.
 
 ```json
 [
@@ -51,14 +73,14 @@ Will return an array of an Account object, which contains the public wallet(s) d
 ]
 ```
 
-If the user closes the popup, Promise will be rejected with an error message. These cases need to be handled by the application being developed.
+If the user closes the popup, Promise will be rejected with an error message. These cases need to be handled by the application.
 
 ## signTransaction()
 
 Allows you to send Algorand transaction(s) to MyAlgo Connect to be signed by the user.
 Transactions will be validated against our own set of validations and then for the AlgoSDK, just in case some transaction fails, the whole set of transactions will be rejected.
 
-#### Fingerprint
+#### Signature and types
 
 ```jsx
 export type Address = string;
@@ -72,24 +94,24 @@ export interface SignedTx {
    blob: Uint8Array;
 }
 
-export interface SignTxSettings {
-  shouldSelectOneAccount?: boolean; 
+export interface SignTransactionOptions {
+	overrideSigner?: Address;
 }
 
-signTransaction(transaction: AlgorandTxn | EncodedTransaction | AlgorandTxn[] | EncodedTransaction[], settings?: SignTxSettings ): Promise<SignedTx | SignerdTx[]>;
+signTransaction(transaction: AlgorandTxn | EncodedTransaction | AlgorandTxn[] | EncodedTransaction[], signOptions?: SignTransactionOptions ): Promise<SignedTx | SignedTx[]>;
 ```
 
 #### Params
 
 - `transaction`: an array or a single transaction of the following types: **AlgorandTxn**, **EncodedTransaction**.
 
-Object `settings` has the following field:
+Optional object `signOptions` may have the following field:
 
-- `disableLedgerNano`: User will be notified that the current operation is not supported to sign by Hardware Ledger. Default is true.
+- `overrideSigner`: Force transactions to be signed with the specified account instead of the from/auth address.
 
 #### Response
 
-Calling signTransaction with an array of transactions will return an array of a SignedTx object.
+Calling `signTransaction` with an array of transactions will return an array of a SignedTx object.
 
 ```json
 [
@@ -141,7 +163,7 @@ Otherwise, it will return a SignedTx object.
 
 Sends to MyAlgo Connect an Algorand program to be signed by the user.
 
-#### Fingerprint
+#### Signature and types
 
 ```jsx
 export type Address = string;
