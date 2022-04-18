@@ -56,7 +56,7 @@ const signOptions: SignTransactionOptions = {
 };
 
 const myAlgoConnect = new MyAlgoConnect();
-const signedTxn = await myAlgoConnect.signTransaction(txn.toByte());
+const signedTxn = await myAlgoConnect.signTransaction(txn.toByte(), signOptions);
 `;
 
 function PaymentTransactionOverrideSignerExample(): JSX.Element {
