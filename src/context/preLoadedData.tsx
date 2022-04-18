@@ -26,7 +26,7 @@ export default function PreLoadDataContextComponent(props: any): JSX.Element {
             //@ts-ignore
             setAlgosdk(x);
 
-            let client = new x.Algodv2('', 'https://api.testnet.algoexplorer.io', '');
+            let client = new x.Algodv2('', 'https://node.testnet.algoexplorerapi.io', '');
             //@ts-ignore
             setAlgoClient(client);
 

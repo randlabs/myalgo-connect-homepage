@@ -13,7 +13,7 @@ const codeV1 = `
 import algosdk from "algosdk";
 import MyAlgoConnect from '@randlabs/myalgo-connect';
  
-const algodClient = new algosdk.Algodv2("",'https://api.testnet.algoexplorer.io', '');
+const algodClient = new algosdk.Algodv2("",'https://node.testnet.algoexplorerapi.io', '');
 const params = await algodClient.getTransactionParams().do();
 
 const txn : any = {
@@ -33,7 +33,7 @@ const codeV2 = `
 import algosdk from "algosdk";
 import MyAlgoConnect from '@randlabs/myalgo-connect';
  
-const algodClient = new algosdk.Algodv2("",'https://api.testnet.algoexplorer.io', '');
+const algodClient = new algosdk.Algodv2("",'https://node.testnet.algoexplorerapi.io', '');
 const params = await algodClient.getTransactionParams().do();
 
 const txn = algosdk.makeApplicationOptInTxnFromObject({

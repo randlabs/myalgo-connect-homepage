@@ -46,7 +46,7 @@ There are two options to create transactions accepted by MyAlgo Connect:
 ```jsx
 import algosdk from "algosdk";
   
-const algodClient = new algosdk.Algodv2("",'https://api.testnet.algoexplorer.io', '');
+const algodClient = new algosdk.Algodv2("",'https://node.testnet.algoexplorerapi.io', '');
 
 const params = await algodClient.getTransactionParams().do();
 
@@ -75,7 +75,7 @@ After the user has signed the transaction(s), the object signedTxn should have t
 ```jsx
 import algosdk from "algosdk";
 
-const algodClient = new algosdk.Algodv2(“”, 'https://api.testnet.algoexplorer.io', '');
+const algodClient = new algosdk.Algodv2(“”, 'https://node.testnet.algoexplorerapi.io', '');
 
 const response = await algodClient.sendRawTransaction(signedTxn.blob).do();
 ```
