@@ -6,7 +6,7 @@ import PrismCode from '../commons/Code';
 const code = `
 import algosdk from "algosdk";
 
-const algodClient = new algosdk.Algodv2('', 'https://api.testnet.algoexplorer.io', '');
+const algodClient = new algosdk.Algodv2('', 'https://node.testnet.algoexplorerapi.io', '');
 
 const response = await algodClient.sendRawTransaction(signedTxn.blob).do();
 `;

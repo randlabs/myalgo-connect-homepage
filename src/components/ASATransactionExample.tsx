@@ -15,7 +15,7 @@ const algoSdkCode = `
 import algosdk from "algosdk";
 import MyAlgoConnect from '@randlabs/myalgo-connect';
  
-const algodClient = new algosdk.Algodv2("",'https://api.testnet.algoexplorer.io', '');
+const algodClient = new algosdk.Algodv2("",'https://node.testnet.algoexplorerapi.io', '');
 const params = await algodClient.getTransactionParams().do();
 
 const txn = algosdk.makeAssetTransferTxnWithSuggestedParamsFromObject({
@@ -37,7 +37,7 @@ const anotherAlternativeCode = `
 import algosdk from "algosdk";
 import MyAlgoConnect from '@randlabs/myalgo-connect';
  
-const algodClient = new algosdk.Algodv2("",'https://api.testnet.algoexplorer.io', '');
+const algodClient = new algosdk.Algodv2("",'https://node.testnet.algoexplorerapi.io', '');
 const params = await algodClient.getTransactionParams().do();
 
 const txn = {
