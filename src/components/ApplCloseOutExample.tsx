@@ -3,7 +3,7 @@ import React, { FormEvent, useContext, useEffect, useState } from "react";
 import { Button, Col, Form, Label, Nav, NavItem, NavLink, Row, TabContent, TabPane } from "reactstrap";
 import AppIndex from "./commons/AppIndex";
 import PrismCode from './commons/Code';
-import SenderDropdown from "./commons/FromDropdown";
+import AccountDropdown from "./commons/FromDropdown";
 import Note from "./commons/Note";
 import "./interactive-examples.scss";
 import ExecutionEnvironment from '@docusaurus/ExecutionEnvironment';
@@ -121,7 +121,7 @@ function ApplCloseOutExample(): JSX.Element {
                     <Row className="mt-3">
                         <Col xs="12" lg="6" className="mt-2">
                             <Form id="payment-tx" onSubmit={onSubmitCloseOutTx}>
-                                <SenderDropdown onSelectSender={selectAccount} accounts={accounts} />
+                                <AccountDropdown onSelectAccount={selectAccount} accounts={accounts} />
                                 <AppIndex onChangeAppIndex={setAppIndex} />
                                 <Note onChangeNote={setNote} />
                                 <Button color="primary" block type="submit" className="mt-2" disabled={accounts.length === 0}>

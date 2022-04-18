@@ -4,7 +4,7 @@ import React, { FormEvent, useContext, useEffect, useState } from "react";
 import { Button, Col, Form, Label, Nav, NavItem, NavLink, Row, TabContent, TabPane } from "reactstrap";
 import PreLoadDataContextComponent, { PreLoadDataContext } from '../context/preLoadedData';
 import PrismCode from './commons/Code';
-import SenderDropdown from "./commons/FromDropdown";
+import AccountDropdown from "./commons/FromDropdown";
 import Integer from "./commons/Integer";
 import "./interactive-examples.scss";
 
@@ -136,7 +136,7 @@ function ApplCreateTransactionExample(): JSX.Element {
                     <Row className="mt-3">
                         <Col xs="12" lg="6" className="mt-2">
                             <Form id="payment-tx" onSubmit={onSubmitCreateAppl}>
-                                <SenderDropdown onSelectSender={selectAccount} accounts={accounts} />
+                                <AccountDropdown onSelectAccount={selectAccount} accounts={accounts} />
                                 <Integer label="Local Bytes" onChangeNumber={setLocalBytes} />
                                 <Integer label="Global Bytes" onChangeNumber={setGlobalBytes} />
                                 <Integer label="Local Int" onChangeNumber={setLocalInt} />

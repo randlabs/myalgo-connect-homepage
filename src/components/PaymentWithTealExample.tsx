@@ -5,7 +5,7 @@ import PreLoadDataContextComponent, { PreLoadDataContext } from '../context/preL
 import Address from "./commons/Address";
 import Amount from "./commons/Amount";
 import PrismCode from './commons/Code';
-import SenderDropdown from "./commons/FromDropdown";
+import AccountDropdown from "./commons/FromDropdown";
 import Note from "./commons/Note";
 import "./interactive-examples.scss";
 
@@ -148,7 +148,7 @@ function PaymentWithTealExample(): JSX.Element {
                 <TabPane tabId="1">
                     <Row className="mt-3">
                         <Col xs="12" lg="6" className="mt-2">
-                            <SenderDropdown onSelectSender={selectAccount} disabled={!!preparedTxn} accounts={accounts} />
+                            <AccountDropdown onSelectAccount={selectAccount} disabled={!!preparedTxn} accounts={accounts} />
                             <Address label="To" onChangeAddress={setReceiver} disabled={!!preparedTxn} />
                             <Amount amount={amount} onChangeAmount={setAmount} disabled={!!preparedTxn} />
                             <Note onChangeNote={setNote} disabled={!!preparedTxn} />
