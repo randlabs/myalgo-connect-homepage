@@ -174,21 +174,47 @@ signLogicSig(logic: Uint8Array | Base64, address: Address): Promise<Uint8Array>;
 
 #### Params
 
-`Logic`:  TEAL program to be signed by the user.
+ - `Logic`:  TEAL program to be signed by the user.
 
-`Address`: Signer’s Address.
+ - `Address`: Signer’s Address.
 
 #### Response
 
 ```json
 // Uint8Array
-{
-  "0": 248,
-  "1": 77,
-  "2": 132,
-  ...
-  "61": 28,
-  "62": 131,
-  "63": 14
-}
+[ 248, 77, 132, ..., 28, 131, 14]
 ```
+
+## tealSign()
+
+Sign an arbitrary piece of data which can be verified by a smart contract through the [ed25519verify](https://developer.algorand.org/docs/get-details/dapps/avm/teal/opcodes/#ed25519verify) opcode.
+
+#### Signature and types
+
+```jsx
+export type Address = string;
+export type Base64 = string;
+
+tealSign(data: Uint8Array | Base64, contractAddress: Address, address: Address): Promise<Uint8Array>;
+```
+
+#### Params
+
+ - `data`: The arbitrary piece of data to be signed
+
+ - `contractAddress`: Contract address/TEAL program hash, which can verify the signature.
+
+ - `address`: Signer address
+
+#### Response
+
+Returns the signature of the data
+
+```js
+// Uint8Array
+[ 248, 77, 132, ..., 28, 131, 14 ]
+```
+
+#### Considerations
+
+- This operation is supported only by mnemonic accounts. Ledger accounts are not supported.
