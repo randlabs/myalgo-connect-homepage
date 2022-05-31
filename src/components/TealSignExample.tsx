@@ -72,7 +72,7 @@ function TealSignExample(): JSX.Element {
                             <AccountDropdown onSelectAccount={selectAccount} accounts={accounts} />
                             <Address label="Contract Address" onChangeAddress={setContractAddress} />
                             <Note label="Data" onChangeNote={setData} />
-                            <Button color="primary" block className="mt-2" onClick={onSignData}>
+                            <Button color="primary" block className="mt-2" onClick={onSignData}  disabled={accounts.length === 0}>
                                 Sign
                             </Button>
                         </Col>

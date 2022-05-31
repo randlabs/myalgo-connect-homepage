@@ -189,6 +189,8 @@ signLogicSig(logic: Uint8Array | Base64, address: Address): Promise<Uint8Array>;
 
 Sign an arbitrary piece of data which can be verified by a smart contract through the [ed25519verify](https://developer.algorand.org/docs/get-details/dapps/avm/teal/opcodes/#ed25519verify) opcode.
 
+See also: [algosdk tealSign](https://algorand.github.io/js-algorand-sdk/modules.html#tealSign)
+
 #### Signature and types
 
 ```jsx
