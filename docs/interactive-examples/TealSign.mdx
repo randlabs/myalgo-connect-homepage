@@ -1,0 +1,18 @@
+---
+sidebar_position: 12
+--- 
+
+import TealSignExample from "../../src/components/TealSignExample"
+
+# Sign arbitrary data for teal program
+
+Sign an arbitrary piece of data which can be verified by a smart contract through the [ed25519verify](https://developer.algorand.org/docs/get-details/dapps/avm/teal/opcodes/#ed25519verify) opcode.
+
+See also: [algosdk tealSign](https://algorand.github.io/js-algorand-sdk/modules.html#tealSign)
+
+### Preconditions
+
+* The user has already shared the account to sign the data with.
+
+### Interactive Example
+<TealSignExample />
