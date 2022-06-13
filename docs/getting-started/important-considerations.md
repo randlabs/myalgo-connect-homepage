@@ -27,3 +27,4 @@ Unfortunately, Ledger Nano has hardware limitations that limit some transaction 
 | appClearProgram | 32 bytes for both devices |
 | assetURL         |    32 bytes for both devices |
 | extraPages    |   | Field not supported  |
+| lease    |   | Field not supported  |
