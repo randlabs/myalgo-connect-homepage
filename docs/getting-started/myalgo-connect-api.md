@@ -202,7 +202,7 @@ tealSign(data: Uint8Array | Base64, contractAddress: Address, address: Address):
 
 #### Params
 
- - `data`: The arbitrary piece of data to be signed
+ - `data`: The arbitrary piece of data to sign
 
  - `contractAddress`: Contract address/TEAL program hash, which can verify the signature.
 
@@ -211,6 +211,42 @@ tealSign(data: Uint8Array | Base64, contractAddress: Address, address: Address):
 #### Response
 
 Returns the signature of the data
+
+```js
+// Uint8Array
+[ 248, 77, 132, ..., 28, 131, 14 ]
+```
+
+#### Considerations
+
+- This operation is supported only by mnemonic accounts. Ledger accounts are not supported.
+
+
+## signBytes()
+
+Sign an arbitrary piece of data. The signature can be verified through `algosdk.verifyBytes`.
+
+The bytes to sign are prepended with the `MX` preffix. That is, the final signature is that of both arrays concatenated (`MX | data`).
+
+See also: [algosdk signBytes](https://algorand.github.io/js-algorand-sdk/modules.html#signBytes)
+
+#### Signature and types
+
+```jsx
+export type Address = string;
+
+signBytes(data: Uint8Array, address: Address): Promise<Uint8Array>;
+```
+
+#### Params
+
+ - `data`: The arbitrary piece of data to sign
+
+ - `address`: Signer address
+
+#### Response
+
+Returns the signature of the data preppended with the `MX` preffix.
 
 ```js
 // Uint8Array

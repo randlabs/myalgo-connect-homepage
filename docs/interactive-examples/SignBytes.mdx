@@ -1,0 +1,20 @@
+---
+sidebar_position: 13
+---
+
+import SignBytesExample from "../../src/components/SignBytesExample"
+
+# Sign a bytes message
+
+Sign an arbitrary piece of data. The signature can be verified through `algosdk.verifyBytes`.
+
+The bytes to sign are prepended with the `MX` preffix.
+
+See also: [algosdk signBytes](https://algorand.github.io/js-algorand-sdk/modules.html#signBytes)
+
+### Preconditions
+
+* The user has already shared the account to sign the data with.
+
+### Interactive Example
+<SignBytesExample />

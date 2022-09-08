@@ -1,19 +1,21 @@
+import MyAlgoConnect from "@randlabs/myalgo-connect";
+import algosdk, { SuggestedParams } from "algosdk";
 import React, { createContext, useEffect, useState } from "react";
 
 interface PreLoadData {
     algosdk,
-    myAlgoWallet,
-    algoClient,
-    params
+    myAlgoWallet: MyAlgoConnect,
+    algoClient: algosdk.Algodv2,
+    params: SuggestedParams
 }
 
 export const PreLoadDataContext = createContext<PreLoadData>(undefined);
 
 export default function PreLoadDataContextComponent(props: any): JSX.Element {
     const [algosdk, setAlgosdk] = useState();
-    const [myAlgoWallet, setMyAlgoWallet] = useState();
-    const [algoClient, setAlgoClient] = useState();
-    const [params, setParams] = useState();
+    const [myAlgoWallet, setMyAlgoWallet] = useState<MyAlgoConnect | undefined>();
+    const [algoClient, setAlgoClient] = useState<algosdk.Algodv2 | undefined>();
+    const [params, setParams] = useState<SuggestedParams | undefined>();
     let timeoutResolution = null;
 
     useEffect(() => {
@@ -36,7 +38,7 @@ export default function PreLoadDataContextComponent(props: any): JSX.Element {
     }, []);
 
 
-    const getTransactionParams = async (client: any) => {
+    const getTransactionParams = async (client: algosdk.Algodv2) => {
         try {
             //@ts-ignore
             const params = await client.getTransactionParams().do();

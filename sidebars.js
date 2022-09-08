@@ -37,7 +37,7 @@ module.exports = {
       'interactive-examples/ASATransacation', 'interactive-examples/ApplOptIn', 'interactive-examples/ApplCloseOut', 
       'interactive-examples/PaymentWithTeal', 'interactive-examples/ApplCreateTransaction', 'interactive-examples/ApplDeleteTransaction', 
       'interactive-examples/ApplUpdateTransaction', 'interactive-examples/PaymentTransactionOverrideSigner',
-      'interactive-examples/TealSign'
+      'interactive-examples/TealSign', 'interactive-examples/SignBytes'
       ],
     },
   ],
