@@ -14,27 +14,15 @@ Firefox and Safari browsers have a different behavior on managing DOM events. Fo
 
 ### Hardware wallet issues
 
-Unfortunately, Ledger Nano has hardware limitations that limit some transaction fields, especially for application transactions. Furthermore, signing stateless teal is not implemented yet in the Algorand ledger application.
+Since v2.0.7, the Algorand ledger application supports all fields and limits as specified by the [consensus protocol](https://github.com/algorand/go-algorand/blob/master/config/consensus.go), save for a few specific listed below. In order to prevent issues when using ledger to interact with DApps, users still using v1 versions of the application should upgrade to the latest.
 
-The MyAlgo Connect team is pushing Ledger to add full functionality for Algorand applications. This section will be updated with the newest changes.
-
-The following table lists the limits for some fields, depending on the algorand ledger application version. The listed values apply for both Ledger Nano S and X devices, unless explicitly specified otherwise.
+The only limitations still in place are for application approval and clear programs.
 
 <center>
 
-| Transaction field   | Ledger V2 (>= v2.0.7)      | Ledger V1 (>= v1.2.16)    |
-| :---                | :----:                     |   :----:                  |
-| note                | 1024 bytes                 |  32 bytes                 |
-| appAccounts         | 4                          |   2                       |
-| appForeignAssets    | 8                          |   1                       |
-| appForeignApps      | 8                          |   1                       |
-| appArgs             | 16, of max size 2048 bytes |   2, of max size 32 bytes |
-| appApprovalProgram  | 128 bytes                  | 128 bytes                 |
-| appClearProgram     | 32 bytes                   | 32 bytes                  |
-| assetURL            | 96 bytes                   | 32 bytes                  |
-| extraPages          | Supported                  |  Field not supported      |
-| lease               | Supported                  |  Field not supported      |
+| Transaction field   | Ledger V2 (>= v2.0.7)      |
+| :---                | :----:                     |
+| appApprovalProgram  | 128 bytes                  |
+| appClearProgram     | 32 bytes                   |
 
 </center>
-
-Additionally, for Ledger V2, the following restriction must hold: `appAccounts + appForeignAssets + appForeignApps <= 8`
