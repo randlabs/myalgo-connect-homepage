@@ -9,7 +9,7 @@ import AccountDropdown from "./commons/FromDropdown";
 import Integer from "./commons/Integer";
 import "./interactive-examples.scss";
 
-const codeV2 = `
+const codeSignTxns = `
 import algosdk from "algosdk";
 import MyAlgoConnect from '@randlabs/myalgo-connect';
  
@@ -38,6 +38,29 @@ const txns = [
 
 const myAlgoConnect = new MyAlgoConnect();
 const signedTxn = await myAlgoConnect.signTxns(txns);
+`;
+
+const codeSignTransaction = `
+import algosdk from "algosdk";
+import MyAlgoConnect from '@randlabs/myalgo-connect';
+ 
+const algodClient = new algosdk.Algodv2("",'https://node.testnet.algoexplorerapi.io', '');
+const params = await algodClient.getTransactionParams().do();
+const txn = algosdk.makeApplicationCreateTxnFromObject({
+    suggestedParams: {
+        ...params,
+    },
+    from: sender,
+    numLocalByteSlices: 4,
+    numGlobalByteSlices: 2,
+    numLocalInts: 0,
+    numGlobalInts: 2,
+    approvalProgram: new Uint8Array(Buffer.from("AiADAAEFIjEYEkEAAiNDMRkkEg==", "base64")),
+    clearProgram: new Uint8Array(Buffer.from("AiABASJD", "base64")),
+    onComplete: 0,
+});
+const myAlgoConnect = new MyAlgoConnect();
+const signedTxn = await myAlgoConnect.signTransaction(txn.toByte());
 `;
 
 function ApplCreateTransactionExample(): JSX.Element {
@@ -162,9 +185,19 @@ function ApplCreateTransactionExample(): JSX.Element {
                 <TabPane tabId="2">
                     <div className="mt-4">Example code</div>
                     <Row className="mt-3">
+                        <Label>With signTxns:</Label>
                         <Col>
                             <PrismCode
-                                code={codeV2}
+                                code={codeSignTxns}
+                                language="js"
+                            />
+                        </Col>
+                    </Row>
+                    <Row className="mt-3">
+                        <Label>With signTransaction:</Label>
+                        <Col>
+                            <PrismCode
+                                code={codeSignTransaction}
                                 language="js"
                             />
                         </Col>

@@ -9,7 +9,7 @@ import PrismCode from './commons/Code';
 import AccountDropdown from "./commons/FromDropdown";
 import "./interactive-examples.scss";
 
-const codeV2 = `
+const codeSignTxns = `
 import algosdk from "algosdk";
 import MyAlgoConnect from '@randlabs/myalgo-connect';
  
@@ -32,6 +32,23 @@ const txns = [
 
 const myAlgoConnect = new MyAlgoConnect();
 const signedTxn = await myAlgoConnect.signTxns(txns);
+`;
+
+const codeSignTransaction = `
+import algosdk from "algosdk";
+import MyAlgoConnect from '@randlabs/myalgo-connect';
+ 
+const algodClient = new algosdk.Algodv2("",'https://node.testnet.algoexplorerapi.io', '');
+const params = await algodClient.getTransactionParams().do();
+const txn = algosdk.makeApplicationDeleteTxnFromObject({
+    suggestedParams: {
+        ...params,
+    },
+    from: sender,
+    appIndex: 17140470,
+});
+const myAlgoConnect = new MyAlgoConnect();
+const signedTxn = await myAlgoConnect.signTransaction(txn.toByte());
 `;
 
 function ApplCreateTransactionExample(): JSX.Element {
@@ -144,9 +161,19 @@ function ApplCreateTransactionExample(): JSX.Element {
                 <TabPane tabId="2">
                     <div className="mt-4">Example code</div>
                     <Row className="mt-3">
+                        <Label>With signTxns:</Label>
                         <Col>
                             <PrismCode
-                                code={codeV2}
+                                code={codeSignTxns}
+                                language="js"
+                            />
+                        </Col>
+                    </Row>
+                    <Row className="mt-3">
+                        <Label>With signTransaction:</Label>
+                        <Col>
+                            <PrismCode
+                                code={codeSignTransaction}
                                 language="js"
                             />
                         </Col>

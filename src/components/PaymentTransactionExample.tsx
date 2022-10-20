@@ -11,7 +11,7 @@ import Note from "./commons/Note";
 import "./interactive-examples.scss";
 
 
-const codeV2 = `
+const codeSignTxns = `
 import algosdk from "algosdk";
 import MyAlgoConnect from '@randlabs/myalgo-connect';
 
@@ -36,6 +36,27 @@ const txns = [
 
 const myAlgoConnect = new MyAlgoConnect();
 const signedTxn = await myAlgoConnect.signTxns(txns);
+`;
+
+const codeSignTransaction = `
+import algosdk from "algosdk";
+import MyAlgoConnect from '@randlabs/myalgo-connect';
+
+const algodClient = new algosdk.Algodv2("",'https://node.testnet.algoexplorerapi.io', '');
+const params = await algodClient.getTransactionParams().do();
+
+const txn = algosdk.makePaymentTxnWithSuggestedParamsFromObject({
+    suggestedParams: {
+        ...params,
+    },
+    from: sender,
+    to: receiver, 
+    amount: amount,
+    note: note
+});
+
+const myAlgoConnect = new MyAlgoConnect();
+const signedTxn = await myAlgoConnect.signTransaction(txn.toByte());
 `;
 
 
@@ -151,8 +172,18 @@ function PaymentTransactionExample(): JSX.Element {
                     <div className="mt-4">Example code</div>
                     <Row className="mt-3">
                         <Col>
+                            <Label>Using signTxns:</Label>
                             <PrismCode
-                                code={codeV2}
+                                code={codeSignTxns}
+                                language="js"
+                            />
+                        </Col>
+                    </Row>
+                    <Row className="mt-3">
+                        <Col>
+                            <Label>Using signTransaction:</Label>
+                            <PrismCode
+                                code={codeSignTransaction}
                                 language="js"
                             />
                         </Col>

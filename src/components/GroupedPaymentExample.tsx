@@ -8,7 +8,7 @@ import PrismCode from './commons/Code';
 import AccountDropdown from "./commons/FromDropdown";
 import "./interactive-examples.scss";
 
-const codeV2 = `
+const codeSignTxns = `
 import algosdk from "algosdk";
 import MyAlgoConnect from '@randlabs/myalgo-connect';
  
@@ -43,6 +43,35 @@ const txns = txnsArray.map(txn => ({
 
 const myAlgoConnect = new MyAlgoConnect();
 const signedTxns = await myAlgoConnect.signTxns(txns);
+`;
+
+const codeSignTransaction = `
+import algosdk from "algosdk";
+import MyAlgoConnect from '@randlabs/myalgo-connect';
+ 
+const algodClient = new algosdk.Algodv2("",'https://node.testnet.algoexplorerapi.io', '');
+const params = await algodClient.getTransactionParams().do();
+const txn1 = algosdk.makePaymentTxnWithSuggestedParamsFromObject({
+    suggestedParams: {
+        ...params,
+    },
+    from: sender,
+    to: receiver1, 
+    amount: amount1
+});
+const txn2 = algosdk.makePaymentTxnWithSuggestedParamsFromObject({
+    suggestedParams: {
+        ...params,
+    },
+    from: sender,
+    to: receiver2, 
+    amount: amount2
+});
+const txnsArray = [ txn1, txn2 ];
+const groupID = algosdk.computeGroupID(txnsArray)
+for (let i = 0; i < 2; i++) txnsArray[i].group = groupID;
+const myAlgoConnect = new MyAlgoConnect();
+const signedTxns = await myAlgoConnect.signTransaction(txnsArray.map(txn => txn.toByte()));
 `;
 
 function GroupedPaymentExample(): JSX.Element {
@@ -178,9 +207,19 @@ function GroupedPaymentExample(): JSX.Element {
                 <TabPane tabId="2">
                     <div className="mt-4">Example code</div>
                     <Row className="mt-3">
+                        <Label>With signTxns:</Label>
                         <Col>
                             <PrismCode
-                                code={codeV2}
+                                code={codeSignTxns}
+                                language="js"
+                            />
+                        </Col>
+                    </Row>
+                    <Row className="mt-3">
+                        <Label>With signTransaction:</Label>
+                        <Col>
+                            <PrismCode
+                                code={codeSignTransaction}
                                 language="js"
                             />
                         </Col>
