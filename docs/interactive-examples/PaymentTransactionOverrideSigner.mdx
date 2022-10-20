@@ -6,11 +6,13 @@ import PaymentTransactionOverrideSignerExample from "../../src/components/Paymen
 
 # Payment Transaction with overrided signer
 
-Create and send a payment transaction to be signed by a specific account.
+Create and sign a payment transaction to be signed by a specific account.
+
+This example is specific for the `signTransaction` method. The new `signTxns` method does not yet support this feature.
 
 ### Preconditions
 
-* User is already engaged and shared some account.
+* User has a wallet and has shared an account with the site
 
 * Signer to override should match with one of address shared by the user, otherwise user will be alert.
 

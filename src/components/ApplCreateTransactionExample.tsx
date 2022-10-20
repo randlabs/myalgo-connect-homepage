@@ -1,4 +1,5 @@
 import ExecutionEnvironment from '@docusaurus/ExecutionEnvironment';
+import { WalletTransaction } from '@randlabs/myalgo-connect';
 
 import React, { FormEvent, useContext, useEffect, useState } from "react";
 import { Button, Col, Form, Label, Nav, NavItem, NavLink, Row, TabContent, TabPane } from "reactstrap";
@@ -7,30 +8,6 @@ import PrismCode from './commons/Code';
 import AccountDropdown from "./commons/FromDropdown";
 import Integer from "./commons/Integer";
 import "./interactive-examples.scss";
-
-const codeV1 = `
-import algosdk from "algosdk";
-import MyAlgoConnect from '@randlabs/myalgo-connect';
- 
-const algodClient = new algosdk.Algodv2("",'https://node.testnet.algoexplorerapi.io', '');
-const params = await algodClient.getTransactionParams().do();
-
-const txn = {
-    ...params,
-    type: "appl",
-    from: sender,
-    appLocalByteSlices: 4,
-    appGlobalByteSlices: 2,
-    appLocalInts: 0,
-    appGlobalInts: 2,
-    appApprovalProgram: new Uint8Array(Buffer.from("AiADAAEFIjEYEkEAAiNDMRkkEg==", "base64")),
-    appClearProgram: new Uint8Array(Buffer.from("AiABASJD", "base64")),
-    appOnComplete: 0,
-}
-
-const myAlgoConnect = new MyAlgoConnect();
-const signedTxn = await myAlgoConnect.signTransaction(txn);
-`;
 
 const codeV2 = `
 import algosdk from "algosdk";
@@ -53,8 +30,14 @@ const txn = algosdk.makeApplicationCreateTxnFromObject({
     onComplete: 0,
 });
 
+const txns = [
+    {
+        txn: Buffer.from(txn.toByte()).toString('base64')
+    }
+];
+
 const myAlgoConnect = new MyAlgoConnect();
-const signedTxn = await myAlgoConnect.signTransaction(txn.toByte());
+const signedTxn = await myAlgoConnect.signTxns(txns);
 `;
 
 function ApplCreateTransactionExample(): JSX.Element {
@@ -65,7 +48,7 @@ function ApplCreateTransactionExample(): JSX.Element {
     const [localBytes, setLocalBytes] = useState(0);
     const [globalBytes, setGlobalBytes] = useState(0);
     const [accountSelected, selectAccount] = useState("");
-    const [response, setResponse] = useState();
+    const [response, setResponse] = useState<any>();
     const [activeTab, setActiveTab] = useState('1');
 
     const toggle = (tab: React.SetStateAction<string>) => {
@@ -103,8 +86,13 @@ function ApplCreateTransactionExample(): JSX.Element {
                 onComplete: 0,
             });
 
-            const signedTxn = await preLoadedData.myAlgoWallet.signTransaction(txn.toByte());
+            const txns: WalletTransaction[] = [
+                {
+                    txn: Buffer.from(txn.toByte()).toString('base64')
+                }
+            ];
 
+            const signedTxn = await preLoadedData.myAlgoWallet.signTxns(txns);
             setResponse(signedTxn);
         }
         catch (err) {
@@ -148,7 +136,7 @@ function ApplCreateTransactionExample(): JSX.Element {
                         </Col>
                         <Col xs="12" lg="6" className="mt-2 mt-xs-2">
                             <Label className="tx-label">
-                                signTransaction() Response
+                                signTxns() Response
                             </Label>
                             <div className="txn-appl-create-response">
                                 <PrismCode
@@ -172,23 +160,11 @@ function ApplCreateTransactionExample(): JSX.Element {
                     }
                 </TabPane>
                 <TabPane tabId="2">
-                    <div className="mt-4"> The following codes allow you to create and sent to MyAlgo Connect an application transaction to be sign by the user. There are two alternatives to create it. Pick the one you prefere.</div>
+                    <div className="mt-4">Example code</div>
                     <Row className="mt-3">
                         <Col>
-                            <Label className="tx-label">
-                                Using Algosdk (Recommended)
-                            </Label>
                             <PrismCode
                                 code={codeV2}
-                                language="js"
-                            />
-                        </Col>
-                        <Col className="mt-4">
-                            <Label className="tx-label">
-                                Another alternative
-                            </Label>
-                            <PrismCode
-                                code={codeV1}
                                 language="js"
                             />
                         </Col>

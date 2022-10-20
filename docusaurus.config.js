@@ -7,7 +7,7 @@ const bufferPlugin = require('./src/docusaurus-plugin/buffer/index');
 /** @type {import('@docusaurus/types').DocusaurusConfig} */
 module.exports = {
   title: 'MyAlgo Connect',
-  tagline: 'MyAlgo Connect’s Developer Documentation. This documentation explains how to connect dapps to the Algorand blockchain through MyAlgo Connect.',
+  tagline: 'MyAlgoConnect Developer Documentation. This documentation explains how to connect Dapps to the Algorand blockchain through MyAlgo Connect.',
   url: 'https://connect.myalgo.com',
   baseUrl: '/',
   onBrokenLinks: 'throw',
@@ -28,7 +28,6 @@ module.exports = {
       },
       {name: 'twitter:site', content: '@randlabs'},
     ],
-    hideableSidebar: false,
     colorMode: {
       // "light" | "dark"
       defaultMode: 'light',
@@ -66,52 +65,12 @@ module.exports = {
         },
       ],
     },
+    docs: {
+      sidebar: {
+        hideable: false
+      }
+    },
     image: 'img/connect-icon.svg',
-    // footer: {
-    //   style: 'dark',
-    //   links: [
-    //     {
-    //       title: 'Docs',
-    //       items: [
-    //         {
-    //           label: 'Tutorial',
-    //           to: '/docs/introduction',
-    //         },
-    //       ],
-    //     },
-    //     {
-    //       title: 'Community',
-    //       items: [
-    //         {
-    //           label: 'Stack Overflow',
-    //           href: 'https://stackoverflow.com/questions/tagged/docusaurus',
-    //         },
-    //         {
-    //           label: 'Discord',
-    //           href: 'https://discordapp.com/invite/docusaurus',
-    //         },
-    //         {
-    //           label: 'Twitter',
-    //           href: 'https://twitter.com/docusaurus',
-    //         },
-    //       ],
-    //     },
-    //     {
-    //       title: 'More',
-    //       items: [
-    //         {
-    //           label: 'Blog',
-    //           to: '/blog',
-    //         },
-    //         {
-    //           label: 'GitHub',
-    //           href: 'https://github.com/randlabs/myalgo-connect-homepage',
-    //         },
-    //       ],
-    //     },
-    //   ],
-    //   copyright: `Copyright © ${new Date().getFullYear()} MyAlgo Connect, Powered by Rand Labs`,
-    // },
     prism: {
       theme: lightCodeTheme,
       darkTheme: darkCodeTheme,

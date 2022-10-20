@@ -21,7 +21,8 @@ export default function PreLoadDataContextComponent(props: any): JSX.Element {
     useEffect(() => {
         import("@randlabs/myalgo-connect").then(x => {
             //@ts-ignore
-            setMyAlgoWallet(new x.default({ bridgeUrl: "https://wallet.myalgo.com/bridge" }));
+            // setMyAlgoWallet(new x.default({ bridgeUrl: "https://wallet.myalgo.com/bridge" }));
+            setMyAlgoWallet(new x.default({ bridgeUrl: "https://dev.myalgo.com/bridge" }));
         });
 
         import("algosdk").then(x => {
