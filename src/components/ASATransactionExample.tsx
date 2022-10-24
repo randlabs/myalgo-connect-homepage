@@ -1,4 +1,5 @@
 import ExecutionEnvironment from '@docusaurus/ExecutionEnvironment';
+import { WalletTransaction } from '@randlabs/myalgo-connect';
 
 import React, { FormEvent, useContext, useState } from "react";
 import { Button, Col, Form, Label, Nav, NavItem, NavLink, Row, TabContent, TabPane } from "reactstrap";
@@ -11,7 +12,7 @@ import AccountDropdown from "./commons/FromDropdown";
 import Note from "./commons/Note";
 import "./interactive-examples.scss";
 
-const algoSdkCode = `
+const codeSignTxns = `
 import algosdk from "algosdk";
 import MyAlgoConnect from '@randlabs/myalgo-connect';
  
@@ -29,29 +30,34 @@ const txn = algosdk.makeAssetTransferTxnWithSuggestedParamsFromObject({
     note: note
 });
 
+const txns = [
+    {
+        txn: Buffer.from(txn.toByte()).toString('base64')
+    }
+];
+
 const myAlgoConnect = new MyAlgoConnect();
-const signedTxn = await myAlgoConnect.signTransaction(txn.toByte());
+const signedTxn = await myAlgoConnect.signTxns(txns);
 `;
 
-const anotherAlternativeCode = `
+const codeSignTransaction = `
 import algosdk from "algosdk";
 import MyAlgoConnect from '@randlabs/myalgo-connect';
  
 const algodClient = new algosdk.Algodv2("",'https://node.testnet.algoexplorerapi.io', '');
 const params = await algodClient.getTransactionParams().do();
-
-const txn = {
-    ...params,
-    type: 'axfer',
+const txn = algosdk.makeAssetTransferTxnWithSuggestedParamsFromObject({
+    suggestedParams: {
+        ...params,
+    },
     from: sender,
     to: receiver,
     assetIndex: 12400859,
     amount: amount,
     note: note
-};
-
+});
 const myAlgoConnect = new MyAlgoConnect();
-const signedTxn = await myAlgoConnect.signTransaction(txn);
+const signedTxn = await myAlgoConnect.signTransaction(txn.toByte());
 `;
 
 function ASATransactionExample(): JSX.Element {
@@ -62,7 +68,7 @@ function ASATransactionExample(): JSX.Element {
     const [receiver, setReceiver] = useState("");
     const [amount, setAmount] = useState(0);
     const [assetIndex, setAssetIndex] = useState(12400859);
-    const [response, setResponse] = useState();
+    const [response, setResponse] = useState<any>();
     const [activeTab, setActiveTab] = useState('1');
 
     const toggle = (tab: React.SetStateAction<string>) => {
@@ -96,9 +102,14 @@ function ASATransactionExample(): JSX.Element {
                 assetIndex: assetIndex
             });
 
-            const signedTxn = await preLoadedData.myAlgoWallet.signTransaction(txn.toByte());
+            const txns: WalletTransaction[] = [
+                {
+                    txn: Buffer.from(txn.toByte()).toString('base64')
+                }
+            ];
 
-            setResponse(signedTxn);
+            const result = await preLoadedData.myAlgoWallet.signTxns(txns);
+            setResponse(result);
         }
         catch (err) {
             console.error(err);
@@ -141,7 +152,7 @@ function ASATransactionExample(): JSX.Element {
                         </Col>
                         <Col xs="12" lg="6" className="mt-2 mt-xs-2">
                             <Label className="tx-label">
-                                signTransaction() Response
+                                signTxns() Response
                             </Label>
                             <div className="response-base txn-asa-transfer-response">
                                 <PrismCode
@@ -165,23 +176,21 @@ function ASATransactionExample(): JSX.Element {
                     }
                 </TabPane>
                 <TabPane tabId="2">
-                    <div className="mt-4"> The following codes allow you to create and sent to MyAlgo Connect a asset payment transaction to be sign by the user. There are two alternatives to create it. Pick the one you prefere.</div>
+                    <div className="mt-4">Example code</div>
                     <Row className="mt-3">
+                        <Label>With signTxns:</Label>
                         <Col>
-                            <Label className="tx-label">
-                                Using Algosdk (Recommended)
-                            </Label>
                             <PrismCode
-                                code={algoSdkCode}
+                                code={codeSignTxns}
                                 language="js"
                             />
                         </Col>
-                        <Col className="mt-4">
-                            <Label className="tx-label">
-                                Another alternative
-                            </Label>
+                    </Row>
+                    <Row className="mt-3">
+                        <Label>With signTransaction:</Label>
+                        <Col>
                             <PrismCode
-                                code={anotherAlternativeCode}
+                                code={codeSignTransaction}
                                 language="js"
                             />
                         </Col>

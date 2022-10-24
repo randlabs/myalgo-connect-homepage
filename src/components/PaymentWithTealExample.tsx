@@ -62,7 +62,7 @@ function PaymentWithTealExample(): JSX.Element {
     const [note, setNote] = useState<Uint8Array | undefined>();
     const [receiver, setReceiver] = useState("");
     const [amount, setAmount] = useState(0);
-    const [response, setResponse] = useState();
+    const [response, setResponse] = useState<any>();
     const [activeTab, setActiveTab] = useState('1');
     const [teal, setTeal] = useState("");
     const [preparedTxn, setTxn] = useState(null);

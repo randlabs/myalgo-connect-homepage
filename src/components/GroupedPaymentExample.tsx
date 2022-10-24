@@ -8,38 +8,7 @@ import PrismCode from './commons/Code';
 import AccountDropdown from "./commons/FromDropdown";
 import "./interactive-examples.scss";
 
-const codeV1 = `
-import algosdk from "algosdk";
-import MyAlgoConnect from '@randlabs/myalgo-connect';
- 
-const algodClient = new algosdk.Algodv2("",'https://node.testnet.algoexplorerapi.io', '');
-const params = await algodClient.getTransactionParams().do();
-
-const txn1: any = {
-    ...params,
-    type: "pay",
-    from: sender,
-    to: receiver1,
-    amount: amount
-};
-
-const txn2: any = {
-    ...params,
-    type: "pay",
-    from: sender,
-    to: receiver2,
-    amount: amount
-};
-
-const txnsArray = [ txn1, txn2 ];
-const groupID = algosdk.computeGroupID(txnsArray)
-for (let i = 0; i < 2; i++) txnsArray[i].group = groupID;
-
-const myAlgoConnect = new MyAlgoConnect();
-const signedTxns = await myAlgoConnect.signTransaction(txnsArray);
-`;
-
-const codeV2 = `
+const codeSignTxns = `
 import algosdk from "algosdk";
 import MyAlgoConnect from '@randlabs/myalgo-connect';
  
@@ -68,6 +37,39 @@ const txnsArray = [ txn1, txn2 ];
 const groupID = algosdk.computeGroupID(txnsArray)
 for (let i = 0; i < 2; i++) txnsArray[i].group = groupID;
 
+const txns = txnsArray.map(txn => ({
+    txn: Buffer.from(txn.toByte()).toString('base64')
+}));
+
+const myAlgoConnect = new MyAlgoConnect();
+const signedTxns = await myAlgoConnect.signTxns(txns);
+`;
+
+const codeSignTransaction = `
+import algosdk from "algosdk";
+import MyAlgoConnect from '@randlabs/myalgo-connect';
+ 
+const algodClient = new algosdk.Algodv2("",'https://node.testnet.algoexplorerapi.io', '');
+const params = await algodClient.getTransactionParams().do();
+const txn1 = algosdk.makePaymentTxnWithSuggestedParamsFromObject({
+    suggestedParams: {
+        ...params,
+    },
+    from: sender,
+    to: receiver1, 
+    amount: amount1
+});
+const txn2 = algosdk.makePaymentTxnWithSuggestedParamsFromObject({
+    suggestedParams: {
+        ...params,
+    },
+    from: sender,
+    to: receiver2, 
+    amount: amount2
+});
+const txnsArray = [ txn1, txn2 ];
+const groupID = algosdk.computeGroupID(txnsArray)
+for (let i = 0; i < 2; i++) txnsArray[i].group = groupID;
 const myAlgoConnect = new MyAlgoConnect();
 const signedTxns = await myAlgoConnect.signTransaction(txnsArray.map(txn => txn.toByte()));
 `;
@@ -80,7 +82,7 @@ function GroupedPaymentExample(): JSX.Element {
     const [receiver2, setReceiver2] = useState("");
     const [amount1, setAmount1] = useState(0);
     const [amount2, setAmount2] = useState(0);
-    const [response, setResponse] = useState();
+    const [response, setResponse] = useState<any>();
     const [activeTab, setActiveTab] = useState('1');
 
     const toggle = (tab: React.SetStateAction<string>) => {
@@ -131,9 +133,12 @@ function GroupedPaymentExample(): JSX.Element {
                 txArr[i].group = groupID;
             }
 
-            const signedTxns = await preLoadedData.myAlgoWallet.signTransaction(txArr.map(txn => txn.toByte()));
+            const txns = txArr.map(txn => ({
+                txn: Buffer.from(txn.toByte()).toString('base64')
+            }));
 
-            setResponse(signedTxns);
+            const result = await preLoadedData.myAlgoWallet.signTxns(txns);
+            setResponse(result);
         }
         catch (err) {
             console.error(err);
@@ -176,7 +181,7 @@ function GroupedPaymentExample(): JSX.Element {
                         </Col>
                         <Col xs="12" lg="6" className="mt-2 mt-xs-2">
                             <Label className="tx-label">
-                                signTransaction() Response
+                                signTxns() Response
                             </Label>
                             <div className="response-base txn-group-response">
                                 <PrismCode
@@ -200,23 +205,21 @@ function GroupedPaymentExample(): JSX.Element {
                     }
                 </TabPane>
                 <TabPane tabId="2">
-                    <div className="mt-4"> The following codes allow you to create and sent to MyAlgo Connect 2 transactions grouped to be sign by the user. There are two alternatives to make it. Pick the one you prefere.</div>
+                    <div className="mt-4">Example code</div>
                     <Row className="mt-3">
+                        <Label>With signTxns:</Label>
                         <Col>
-                            <Label className="tx-label">
-                                Using Algosdk (Recommended)
-                            </Label>
                             <PrismCode
-                                code={codeV2}
+                                code={codeSignTxns}
                                 language="js"
                             />
                         </Col>
-                        <Col className="mt-4">
-                            <Label className="tx-label">
-                                Another alternative
-                            </Label>
+                    </Row>
+                    <Row className="mt-3">
+                        <Label>With signTransaction:</Label>
+                        <Col>
                             <PrismCode
-                                code={codeV1}
+                                code={codeSignTransaction}
                                 language="js"
                             />
                         </Col>

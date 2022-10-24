@@ -6,13 +6,13 @@ import GroupTransaction from "../../src/components/GroupedPaymentExample"
 
 # Grouped Transaction
 
-Create and send an atomic payment transaction (2 transactions grouped) to be signed by the user.
+Create and sign an atomic payment transaction (2 transactions grouped).
 
 ### Preconditions
 
-* User is already engaged and shared some account.
+* User has a wallet and has shared an account with the site
 
-* Transaction sender should match with one of address shared by the user, otherwise user will be alert.
+* The transaction sender must match with one of the addresses shared by the user.
 
 ### Interactive Example
 <GroupTransaction />

@@ -1,36 +1,16 @@
 
-import React, { FormEvent, useContext, useEffect, useState } from "react";
+import ExecutionEnvironment from '@docusaurus/ExecutionEnvironment';
+import { WalletTransaction } from '@randlabs/myalgo-connect';
+import React, { FormEvent, useContext, useState } from "react";
 import { Button, Col, Form, Label, Nav, NavItem, NavLink, Row, TabContent, TabPane } from "reactstrap";
+import PreLoadDataContextComponent, { PreLoadDataContext } from "../context/preLoadedData";
 import AppIndex from "./commons/AppIndex";
 import PrismCode from './commons/Code';
 import AccountDropdown from "./commons/FromDropdown";
 import Note from "./commons/Note";
 import "./interactive-examples.scss";
-import ExecutionEnvironment from '@docusaurus/ExecutionEnvironment';
-import PreLoadDataContextComponent, { PreLoadDataContext } from "../context/preLoadedData";
-import ConnectExample from "./ConnectExample";
 
-const codeV1 = `
-import algosdk from "algosdk";
-import MyAlgoConnect from '@randlabs/myalgo-connect';
- 
-const algodClient = new algosdk.Algodv2("",'https://node.testnet.algoexplorerapi.io', '');
-const params = await algodClient.getTransactionParams().do();
-
-const txn : any = {
-    ...params,
-    type: "appl",
-    appOnComplete: 2, // OnApplicationComplete.CloseOutOC
-    from: sender,
-    appIndex: appIndex,
-    note: note,
-};
-
-const myAlgoConnect = new MyAlgoConnect();
-const signedTxn = await myAlgoConnect.signTransaction(txn);
-`;
-
-const codeV2 = `
+const codeSignTxns = `
 import algosdk from "algosdk";
 import MyAlgoConnect from '@randlabs/myalgo-connect';
  
@@ -46,6 +26,30 @@ const txn = algosdk.makeApplicationCloseOutTxnFromObject({
     note: note
 });
 
+const txns = [
+    {
+        txn: Buffer.from(txn.toByte()).toString('base64')
+    }
+];
+
+const myAlgoConnect = new MyAlgoConnect();
+const signedTxn = await myAlgoConnect.signTxns(txns);
+`;
+
+const codeSignTransaction = `
+import algosdk from "algosdk";
+import MyAlgoConnect from '@randlabs/myalgo-connect';
+ 
+const algodClient = new algosdk.Algodv2("",'https://node.testnet.algoexplorerapi.io', '');
+const params = await algodClient.getTransactionParams().do();
+const txn = algosdk.makeApplicationCloseOutTxnFromObject({
+    suggestedParams: {
+        ...params,
+    },
+    from: sender,
+    appIndex: appIndex,
+    note: note
+});
 const myAlgoConnect = new MyAlgoConnect();
 const signedTxn = await myAlgoConnect.signTransaction(txn.toByte());
 `;
@@ -56,7 +60,7 @@ function ApplCloseOutExample(): JSX.Element {
     const [accountSelected, selectAccount] = useState("");
     const [appIndex, setAppIndex] = useState("14241387");
     const [note, setNote] = useState<Uint8Array | undefined>();
-    const [response, setResponse] = useState();
+    const [response, setResponse] = useState<any>();
     const [activeTab, setActiveTab] = useState('1');
     const toggle = (tab: React.SetStateAction<string>) => {
         if (activeTab !== tab) setActiveTab(tab);
@@ -88,9 +92,14 @@ function ApplCloseOutExample(): JSX.Element {
                 note: note
             });
 
-            const signedTxn = await preLoadedData.myAlgoWallet.signTransaction(txn.toByte());
+            const txns: WalletTransaction[] = [
+                {
+                    txn: Buffer.from(txn.toByte()).toString('base64')
+                }
+            ];
 
-            setResponse(signedTxn);
+            const result = await preLoadedData.myAlgoWallet.signTxns(txns);
+            setResponse(result);
         }
         catch (err) {
             console.error(err);
@@ -131,7 +140,7 @@ function ApplCloseOutExample(): JSX.Element {
                         </Col>
                         <Col xs="12" lg="6" className="mt-2 mt-xs-2">
                             <Label className="tx-label">
-                                signTransaction() Response
+                                signTxns() Response
                             </Label>
                             <div className="response-base txn-optin-response">
                                 <PrismCode
@@ -155,23 +164,21 @@ function ApplCloseOutExample(): JSX.Element {
                     }
                 </TabPane>
                 <TabPane tabId="2">
-                    <div className="mt-4"> The following codes allow you to create and sent to MyAlgo Connect an closeOut transaction to be sign by the user. There are two alternatives to create it. Pick the one you prefere.</div>
+                    <div className="mt-4">Example code</div>
                     <Row className="mt-3">
+                        <Label>With signTxns:</Label>
                         <Col>
-                            <Label className="tx-label">
-                                Using Algosdk (Recommended)
-                            </Label>
                             <PrismCode
-                                code={codeV2}
+                                code={codeSignTxns}
                                 language="js"
                             />
                         </Col>
-                        <Col className="mt-4">
-                            <Label className="tx-label">
-                                Another alternative
-                            </Label>
+                    </Row>
+                    <Row className="mt-3">
+                        <Label>With signTransaction:</Label>
+                        <Col>
                             <PrismCode
-                                code={codeV1}
+                                code={codeSignTransaction}
                                 language="js"
                             />
                         </Col>

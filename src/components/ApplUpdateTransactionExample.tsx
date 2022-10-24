@@ -1,4 +1,5 @@
 import ExecutionEnvironment from '@docusaurus/ExecutionEnvironment';
+import { WalletTransaction } from '@randlabs/myalgo-connect';
 import React, { FormEvent, useContext, useEffect, useState } from "react";
 import { Button, Col, Form, Label, Nav, NavItem, NavLink, Row, TabContent, TabPane } from "reactstrap";
 import PreLoadDataContextComponent, { PreLoadDataContext } from '../context/preLoadedData';
@@ -7,27 +8,7 @@ import PrismCode from './commons/Code';
 import AccountDropdown from "./commons/FromDropdown";
 import "./interactive-examples.scss";
 
-const codeV1 = `
-import algosdk from "algosdk";
-import MyAlgoConnect from '@randlabs/myalgo-connect';
- 
-const algodClient = new algosdk.Algodv2("",'https://node.testnet.algoexplorerapi.io', '');
-const params = await algodClient.getTransactionParams().do();
-
-const txn = {
-    ...params,
-    type: "appl",
-    from: sender,
-    appApprovalProgram: new Uint8Array(Buffer.from("AiADAAEFIjEYEkEAAiNDMRkkEg==", "base64")),
-    appClearProgram: new Uint8Array(Buffer.from("AiABASJD", "base64")),
-    appOnComplete: 4,
-}
-
-const myAlgoConnect = new MyAlgoConnect();
-const signedTxn = await myAlgoConnect.signTransaction(txn);
-`;
-
-const codeV2 = `
+const codeSignTxns = `
 import algosdk from "algosdk";
 import MyAlgoConnect from '@randlabs/myalgo-connect';
  
@@ -43,6 +24,30 @@ const txn = algosdk.makeApplicationUpdateTxnFromObject({
     clearProgram: new Uint8Array(Buffer.from("AiABASJD", "base64")),
 });
 
+const txns = [
+    {
+        txn: Buffer.from(txn.toByte()).toString('base64')
+    }
+];
+
+const myAlgoConnect = new MyAlgoConnect();
+const signedTxn = await myAlgoConnect.signTxns(txn.toByte());
+`;
+
+const codeSignTransaction = `
+import algosdk from "algosdk";
+import MyAlgoConnect from '@randlabs/myalgo-connect';
+ 
+const algodClient = new algosdk.Algodv2("",'https://node.testnet.algoexplorerapi.io', '');
+const params = await algodClient.getTransactionParams().do();
+const txn = algosdk.makeApplicationUpdateTxnFromObject({
+    suggestedParams: {
+        ...params,
+    },
+    from: sender,
+    approvalProgram: new Uint8Array(Buffer.from("AiADAAEFIjEYEkEAAiNDMRkkEg==", "base64")),
+    clearProgram: new Uint8Array(Buffer.from("AiABASJD", "base64")),
+});
 const myAlgoConnect = new MyAlgoConnect();
 const signedTxn = await myAlgoConnect.signTransaction(txn.toByte());
 `;
@@ -53,7 +58,7 @@ function ApplUpdateTransactionExample(): JSX.Element {
     const applProgram = "AiAEAAUEASYDB0NyZWF0b3IMTGFzdE1vZGlmaWVyBUNvdW50IjEYEkEADigxAGcpMQBnKiJnQgApMRkjEkAACjEZJBJAAA5CABgoZDEAEkEAEkIADSkxAGcqKmQlCGdCAAAlQyJDIgBD";
     const appIndex = 17155035;
     const [accountSelected, selectAccount] = useState("");
-    const [response, setResponse] = useState();
+    const [response, setResponse] = useState<any>();
     const [activeTab, setActiveTab] = useState('1');
     
     const toggle = (tab: React.SetStateAction<string>) => {
@@ -87,7 +92,13 @@ function ApplUpdateTransactionExample(): JSX.Element {
                 appIndex: appIndex,
             });
 
-            const signedTxn = await preLoadedData.myAlgoWallet.signTransaction(txn.toByte());
+            const txns: WalletTransaction[] = [
+                {
+                    txn: Buffer.from(txn.toByte()).toString('base64')
+                }
+            ];
+
+            const signedTxn = await preLoadedData.myAlgoWallet.signTxns(txns);
             setResponse(signedTxn);
         }
         catch (err) {
@@ -128,7 +139,7 @@ function ApplUpdateTransactionExample(): JSX.Element {
                         </Col>
                         <Col xs="12" lg="6" className="mt-2 mt-xs-2">
                             <Label className="tx-label">
-                                signTransaction() Response
+                                signTxns() Response
                             </Label>
                             <div className="txn-appl-update-response">
                                 <PrismCode
@@ -152,23 +163,21 @@ function ApplUpdateTransactionExample(): JSX.Element {
                     }
                 </TabPane>
                 <TabPane tabId="2">
-                    <div className="mt-4"> The following codes allow you to create and sent to MyAlgo Connect an application update transaction to be sign by the user. There are two alternatives to create it. Pick the one you prefere.</div>
+                    <div className="mt-4">Example code</div>
                     <Row className="mt-3">
+                        <Label>With signTxns:</Label>
                         <Col>
-                            <Label className="tx-label">
-                                Using Algosdk (Recommended)
-                            </Label>
                             <PrismCode
-                                code={codeV2}
+                                code={codeSignTxns}
                                 language="js"
                             />
                         </Col>
-                        <Col className="mt-4">
-                            <Label className="tx-label">
-                                Another alternative
-                            </Label>
+                    </Row>
+                    <Row className="mt-3">
+                        <Label>With signTransaction:</Label>
+                        <Col>
                             <PrismCode
-                                code={codeV1}
+                                code={codeSignTransaction}
                                 language="js"
                             />
                         </Col>

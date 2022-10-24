@@ -67,7 +67,7 @@ function PaymentTransactionOverrideSignerExample(): JSX.Element {
     const [sender, setSender] = useState("");
     const [receiver, setReceiver] = useState("");
     const [amount, setAmount] = useState(0);
-    const [response, setResponse] = useState();
+    const [response, setResponse] = useState<any>();
     const [activeTab, setActiveTab] = useState('1');
 
     const toggle = (tab: React.SetStateAction<string>) => {
@@ -144,7 +144,7 @@ function PaymentTransactionOverrideSignerExample(): JSX.Element {
                         </Col>
                         <Col xs="12" lg="6" className="mt-2 mt-xs-2">
                             <Label className="tx-label">
-                                signTransaction() Response
+                                signTxns() Response
                             </Label>
                             <div className="txn-payment-example-response">
                                 <PrismCode

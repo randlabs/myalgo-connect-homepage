@@ -8,20 +8,3 @@ The network selection is abstracted from MyAlgo Connect and is instead defined b
 
 Depending on the network you choose, genesisID and genesisHash will change.
 In the following links you can find the data needed for every network respectively: **[MainNet](https://developer.algorand.org/docs/reference/algorand-networks/mainnet/)** , **[TestNet](https://developer.algorand.org/docs/reference/algorand-networks/testnet/)** and **[BetaNet](https://developer.algorand.org/docs/reference/algorand-networks/betanet/)**.
-
-Follow this example to create a transaction choosing the Testnet network and send it to MyAlgo Connect to be signed:
-
-```jsx
-import algosdk from "algosdk";
-import MyAlgoConnect from '@randlabs/myalgo-connect';
- 
-const algodClient = new algosdk.Algodv2("",'https://node.testnet.algoexplorerapi.io', '');
- 
-const params = await algodClient.getTransactionParams().do();
-
-const txToSigned = algosdk.makePaymentTxnWithSuggestedParams(from, to, amount, undefined, undefined, params);
-
-const myAlgoConnect = new MyAlgoConnect();
- 
-const txnSignedByTheUser = await myAlgoConnect.signTransaction(txToSigned.toByte());
-```

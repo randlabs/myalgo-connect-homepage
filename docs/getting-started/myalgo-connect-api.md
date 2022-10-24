@@ -75,6 +75,68 @@ Returns an array of Account objects, which contains the public wallet(s) data se
 
 If the user closes the popup, Promise will be rejected with an error message. These cases need to be handled by the application.
 
+## signTxns()
+
+Sign a set of transactions. This method is [ARC-0001](https://github.com/algorandfoundation/ARCs/blob/a3a8cfa078de98977eaa5f00553c61547db7e953/ARCs/arc-0001.md) compliant and is preferred over `signTransaction`.
+
+#### Signature and types
+
+For more information and details on types and semantics, see the [ARC syntax and interfaces](https://github.com/algorandfoundation/ARCs/blob/a3a8cfa078de98977eaa5f00553c61547db7e953/ARCs/arc-0001.md#syntax-and-interfaces) section.
+
+```ts
+
+export type Address = string;
+export type Base64 = string;
+export type TxnStr = Base64;
+export type SignedTxnStr = Base64;
+
+export interface MultisigMetadata {
+	version: number;
+	threshold: number;
+	addrs: Address[];
+}
+
+export interface WalletTransaction {
+	txn: TxnStr;
+	authAddr?: Address;
+	msig?: MultisigMetadata;
+	signers?: Address[];
+	stxn?: SignedTxnStr;
+	message?: string;
+	groupMessage?: string;
+}
+
+export interface SignTxnsOpts {
+	message?: string;
+}
+
+export interface SignTxnsError extends Error {
+	code: number;
+	data?: any;
+}
+
+signTxns(txns: WalletTransaction[], opts?: SignTxnOpts): Promise<(SignedTxnStr | null)[]>;
+```
+
+#### Response
+
+`signTxns` returns an array with the base64 string encoded signatures of each transaction, or null for transactions that do not require signing.
+
+#### Considerations
+
+Unlike `signTransaction`, when signing a group all transactions that belong to that group must be present. MyAlgoConnect verifies that the computed group ID of the received transaction matches the `group` field present in them. If there are transactions that must not be signed (e.g. that are signed by another party, or by a logic sig), then use an empty `signers` array.
+
+The following `WalletTransaction` setting are not yet implemented:
+ * `authAddr`
+ * `msig`
+ * `stxn`
+ * `message`
+ * `groupMessage`
+
+Trying to sign a WalletTransaction with any of this fields will throw an unsupported operation error (code `4200`).
+
+The `SignTxnsOpts` `message` setting is not yet implemented.
+
 ## signTransaction()
 
 Allows you to send Algorand transaction(s) to MyAlgo Connect to be signed by the user.
