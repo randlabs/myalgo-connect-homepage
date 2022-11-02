@@ -129,7 +129,6 @@ Unlike `signTransaction`, when signing a group all transactions that belong to t
 The following `WalletTransaction` setting are not yet implemented:
  * `authAddr`
  * `msig`
- * `stxn`
  * `message`
  * `groupMessage`
 
