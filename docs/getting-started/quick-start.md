@@ -57,9 +57,9 @@ const txn = algosdk.makePaymentTxnWithSuggestedParamsFromObject({
 Once you have created the transaction, it can be signed by the user by simply sending it to MyAlgo Connect. For more information on the `signTxns`/`signTransaction` methods, check the [API section](myalgo-connect-api#signtxns)
 
 ```jsx
-const [ signedTxn ] = await myAlgoConnect.signTxns({
+const [ signedTxn ] = await myAlgoConnect.signTxns([{
   txn: Buffer.from(txn.toByte()).toString('base64')
-});
+}]);
 ```
 
 ### Send Transactions to the Network
