@@ -126,13 +126,14 @@ signTxns(txns: WalletTransaction[], opts?: SignTxnOpts): Promise<(SignedTxnStr |
 
 Unlike `signTransaction`, when signing a group all transactions that belong to that group must be present. MyAlgoConnect verifies that the computed group ID of the received transaction matches the `group` field present in them. If there are transactions that must not be signed (e.g. that are signed by another party, or by a logic sig), then use an empty `signers` array.
 
-The following `WalletTransaction` setting are not yet implemented:
- * `authAddr`
+The following `WalletTransaction` setting are not yet implemented. Trying to sign a WalletTransaction with any of these fields will throw an unsupported operation error (code `4200`):
  * `msig`
  * `message`
  * `groupMessage`
 
-Trying to sign a WalletTransaction with any of this fields will throw an unsupported operation error (code `4200`).
+Regarding the `authAddr` setting, only the following cases are supported. In any other case, an unsupported operation error will be thrown.
+ * When trying to sign a single transacion, `authAddr` can be either a mnemonic or a ledger account
+ * When trying to sign multiple transacion, the transactions sender must be a mnemonic account, and `authAddr` must also be a mnemonic account
 
 The `SignTxnsOpts` `message` setting is not yet implemented.
 
