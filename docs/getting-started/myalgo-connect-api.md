@@ -132,8 +132,8 @@ The following `WalletTransaction` setting are not yet implemented. Trying to sig
  * `groupMessage`
 
 Regarding the `authAddr` setting, only the following cases are supported. In any other case, an unsupported operation error will be thrown.
- * When trying to sign a single transacion, `authAddr` can be either a mnemonic or a ledger account
- * When trying to sign multiple transacion, the transactions sender must be a mnemonic account, and `authAddr` must also be a mnemonic account
+ * When trying to sign a single transaction, `authAddr` can be either a mnemonic or a ledger account
+ * When trying to sign multiple transactions, the transactions' sender must be a mnemonic account, and `authAddr` must also be a mnemonic account
 
 The `SignTxnsOpts` `message` setting is not yet implemented.
 
