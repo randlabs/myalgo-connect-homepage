@@ -86,7 +86,7 @@ module.exports = {
           editUrl: 'https://github.com/randlabs/myalgo-connect-homepage/edit/master',
         },
         googleAnalytics: {
-          trackingID: 'UA-131115436-8',
+          trackingID: 'G-KBVMSBV1Z1',
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
