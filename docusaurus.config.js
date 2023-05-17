@@ -85,8 +85,9 @@ module.exports = {
           // Please change this to your repo.
           editUrl: 'https://github.com/randlabs/myalgo-connect-homepage/edit/master',
         },
-        googleAnalytics: {
+        gtag: {
           trackingID: 'G-KBVMSBV1Z1',
+          anonymizeIP: true,
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
